@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Herramientas Financieras Adstter</title>
+    <style>
+        :root {
+            --primary: #1a237e;
+            --primary-light: #3949ab;
+            --primary-dark: #0d1642;
+            --accent: #00bcd4;
+            --accent-dark: #0097a7;
+            --success: #2e7d32;
+            --success-light: #e8f5e9;
+            --danger: #c62828;
+            --danger-light: #ffebee;
+            --warning: #ef6c00;
+            --warning-light: #fff3e0;
+            --info: #1565c0;
+            --info-light: #e3f2fd;
+            --bg: #f5f5f5;
+            --bg-card: #ffffff;
+            --text: #212121;
+            --text-secondary: #616161;
+            --border: #e0e0e0;
+            --shadow: 0 2px 8px rgba(0,0,0,0.1);
+            --shadow-lg: 0 4px 16px rgba(0,0,0,0.12);
+            --radius: 12px;
+            --radius-sm: 8px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* ---- HEADER ---- */
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 28px 32px 20px;
+            box-shadow: var(--shadow-lg);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .header h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .header .subtitle {
+            font-size: 0.9rem;
+            opacity: 0.85;
+            margin-top: 2px;
+        }
+        .header-stats {
+            display: flex;
+            gap: 20px;
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+        .header-stats span {
+            background: rgba(255,255,255,0.15);
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        /* ---- BÚSQUEDA ---- */
+        .search-bar {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-top: 16px;
+        }
+        .search-bar input {
+            width: 100%;
+            padding: 10px 16px 10px 42px;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 0.95rem;
+            background: rgba(255,255,255,0.18);
+            color: white;
+            outline: none;
+            transition: background 0.2s;
+        }
+        .search-bar input::placeholder { color: rgba(255,255,255,0.6); }
+        .search-bar input:focus { background: rgba(255,255,255,0.28); }
+        .search-wrapper {
+            position: relative;
+        }
+        .search-wrapper svg {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            stroke: rgba(255,255,255,0.6);
+            fill: none;
+            stroke-width: 2;
+            pointer-events: none;
+        }
+
+        /* ---- CONTENEDOR PRINCIPAL ---- */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 24px 20px 40px;
+        }
+
+        /* ---- CATEGORÍA ---- */
+        .category {
+            margin-bottom: 32px;
+        }
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--border);
+        }
+        .category-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        .category-header h2 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .category-count {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            background: #eee;
+            padding: 2px 10px;
+            border-radius: 12px;
+            margin-left: auto;
+        }
+
+        /* Colores por categoría */
+        .cat-fiscal .category-icon { background: #e8eaf6; color: var(--primary); }
+        .cat-fiscal .category-header { border-bottom-color: #c5cae9; }
+        .cat-facturacion .category-icon { background: #e0f2f1; color: #00695c; }
+        .cat-facturacion .category-header { border-bottom-color: #b2dfdb; }
+        .cat-zoho .category-icon { background: #fff3e0; color: #e65100; }
+        .cat-zoho .category-header { border-bottom-color: #ffe0b2; }
+        .cat-contabilidad .category-icon { background: #f3e5f5; color: #7b1fa2; }
+        .cat-contabilidad .category-header { border-bottom-color: #ce93d8; }
+        .cat-presupuesto .category-icon { background: #e3f2fd; color: #1565c0; }
+        .cat-presupuesto .category-header { border-bottom-color: #90caf9; }
+        .cat-evaluacion .category-icon { background: #e8f5e9; color: #2e7d32; }
+        .cat-evaluacion .category-header { border-bottom-color: #a5d6a7; }
+        .cat-libros .category-icon { background: #fce4ec; color: #c62828; }
+        .cat-libros .category-header { border-bottom-color: #ef9a9a; }
+
+        /* ---- GRID DE TARJETAS ---- */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+        }
+
+        /* ---- TARJETA ---- */
+        .card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: transform 0.15s, box-shadow 0.15s;
+            cursor: pointer;
+            border-left: 4px solid transparent;
+            text-decoration: none;
+            color: inherit;
+        }
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+        .card-top {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .card-emoji {
+            font-size: 1.6rem;
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            background: #f5f5f5;
+        }
+        .card-info { flex: 1; min-width: 0; }
+        .card-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+            line-height: 1.3;
+        }
+        .card-desc {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+        .card-footer {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-top: auto;
+        }
+        .badge {
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: 500;
+        }
+        .badge-html { background: #e3f2fd; color: #1565c0; }
+        .badge-python { background: #fff9c4; color: #f57f17; }
+        .badge-bat { background: #efebe9; color: #5d4037; }
+        .badge-zoho { background: #fff3e0; color: #e65100; }
+        .badge-sat { background: #fce4ec; color: #c62828; }
+        .badge-auto { background: #e8f5e9; color: #2e7d32; }
+
+        /* Bordes de categoría en tarjetas */
+        .cat-fiscal .card { border-left-color: var(--primary-light); }
+        .cat-facturacion .card { border-left-color: #00897b; }
+        .cat-zoho .card { border-left-color: #ef6c00; }
+        .cat-contabilidad .card { border-left-color: #7b1fa2; }
+        .cat-presupuesto .card { border-left-color: #1565c0; }
+        .cat-evaluacion .card { border-left-color: #2e7d32; }
+        .cat-libros .card { border-left-color: #c62828; }
+
+        /* Card como script (no enlace directo) */
+        .card-script {
+            position: relative;
+        }
+        .card-script .card-action {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.78rem;
+            color: var(--accent-dark);
+            font-weight: 500;
+            margin-top: 4px;
+        }
+        .card-script .card-action svg {
+            width: 14px; height: 14px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        /* ---- MODAL ---- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal {
+            background: white;
+            border-radius: var(--radius);
+            padding: 28px;
+            max-width: 560px;
+            width: 90%;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+        }
+        .modal h3 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+        .modal p {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+        .modal-cmd {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 14px 16px;
+            border-radius: var(--radius-sm);
+            font-family: 'Cascadia Code', 'Consolas', monospace;
+            font-size: 0.82rem;
+            line-height: 1.5;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+            margin-bottom: 16px;
+            position: relative;
+        }
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+        .btn {
+            padding: 8px 20px;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        .btn-primary:hover { background: var(--primary-light); }
+        .btn-secondary {
+            background: #eee;
+            color: var(--text);
+        }
+        .btn-secondary:hover { background: #ddd; }
+        .btn-copy {
+            background: var(--accent-dark);
+            color: white;
+        }
+        .btn-copy:hover { background: var(--accent); }
+
+        /* Indicador de ejecución via servidor */
+        .server-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.78rem;
+            padding: 6px 14px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.15);
+        }
+        .status-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: #f44336;
+        }
+        .status-dot.online { background: #4caf50; }
+
+        /* ---- NO RESULTS ---- */
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+            display: none;
+        }
+        .no-results.visible { display: block; }
+        .no-results svg {
+            width: 48px; height: 48px;
+            stroke: #ccc;
+            fill: none;
+            stroke-width: 1.5;
+            margin-bottom: 12px;
+        }
+
+        /* ---- OUTPUT PANEL (for script execution) ---- */
+        .output-panel {
+            display: none;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 16px;
+            border-radius: var(--radius-sm);
+            font-family: 'Cascadia Code', 'Consolas', monospace;
+            font-size: 0.8rem;
+            line-height: 1.6;
+            max-height: 300px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+            margin-top: 12px;
+        }
+        .output-panel.visible { display: block; }
+        .output-panel .out-success { color: #4caf50; }
+        .output-panel .out-error { color: #f44336; }
+        .output-panel .out-info { color: #64b5f6; }
+
+        /* ---- RESPONSIVE ---- */
+        @media (max-width: 768px) {
+            .header { padding: 20px 16px 16px; }
+            .header h1 { font-size: 1.3rem; }
+            .header-stats { display: none; }
+            .container { padding: 16px 12px; }
+            .cards-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ---- ANIMATION ---- */
+        .fade-in {
+            animation: fadeIn 0.3s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+    <div class="header-top">
+        <div>
+            <h1>Herramientas Financieras</h1>
+            <div class="subtitle">Adstter Guatemala - Centro de Control</div>
+        </div>
+        <div class="header-stats">
+            <span id="totalTools">19 herramientas</span>
+            <span class="server-status">
+                <span class="status-dot" id="serverDot"></span>
+                <span id="serverLabel">Servidor: verificando...</span>
+            </span>
+        </div>
+    </div>
+    <div class="search-bar">
+        <div class="search-wrapper">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="searchInput" placeholder="Buscar herramienta... (ej: IVA, facturas, presupuesto, Zoho)" autocomplete="off">
+        </div>
+    </div>
+</header>
+
+<div class="container" id="mainContainer">
+    <!-- Generado por JS -->
+</div>
+
+<div class="no-results" id="noResults">
+    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <p>No se encontraron herramientas con ese criterio.</p>
+</div>
+
+<!-- MODAL para scripts -->
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+        <h3 id="modalTitle"></h3>
+        <p id="modalDesc"></p>
+        <div class="modal-cmd" id="modalCmd"></div>
+        <div class="output-panel" id="modalOutput"></div>
+        <div class="modal-buttons">
+            <button class="btn btn-secondary" onclick="closeModal()">Cerrar</button>
+            <button class="btn btn-copy" onclick="copyCommand()">Copiar comando</button>
+            <button class="btn btn-primary" id="btnExecute" onclick="executeScript()">Ejecutar</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL especial para Asistente IVA -->
+<div class="modal-overlay" id="ivaModalOverlay">
+    <div class="modal">
+        <h3>Asistente IVA Fiscal</h3>
+        <p>Seleccione que desea hacer:</p>
+
+        <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:16px;">
+            <a href="asistente-iva.html" target="_blank" class="btn btn-primary" id="btnIvaOpen" style="width:100%; text-align:left; padding:14px 20px; text-decoration:none; display:block;">
+                <strong>Abrir asistente</strong><br>
+                <span style="font-size:0.8rem; opacity:0.85;">Ver datos existentes, cargar archivos Excel manualmente</span>
+            </a>
+
+            <div style="border:1px solid var(--border); border-radius:var(--radius-sm); padding:16px; background:#fafafa;" id="ivaRunSection">
+                <div style="font-weight:600; margin-bottom:10px;">Ejecutar proceso completo (descarga SAT + Zoho + calculo)</div>
+                <div style="margin-bottom:10px;">
+                    <label style="font-size:0.85rem; color:var(--text-secondary);">Periodo:</label>
+                    <select id="ivaPeriodo" style="width:100%; padding:8px; border:1px solid var(--border); border-radius:6px; font-size:0.9rem; margin-top:4px;">
+                        <option value="acumulado_mes">Acumulado del mes</option>
+                        <option value="semana_actual">Semana actual</option>
+                        <option value="semana_anterior">Semana anterior</option>
+                        <option value="mes_completo">Mes completo</option>
+                    </select>
+                </div>
+                <div id="ivaMesAnio" style="display:none; gap:10px; margin-bottom:10px;">
+                    <div style="flex:1;">
+                        <label style="font-size:0.85rem; color:var(--text-secondary);">Mes:</label>
+                        <select id="ivaMes" style="width:100%; padding:8px; border:1px solid var(--border); border-radius:6px;">
+                            <option value="1">Enero</option><option value="2">Febrero</option>
+                            <option value="3">Marzo</option><option value="4">Abril</option>
+                            <option value="5">Mayo</option><option value="6">Junio</option>
+                            <option value="7">Julio</option><option value="8">Agosto</option>
+                            <option value="9">Septiembre</option><option value="10">Octubre</option>
+                            <option value="11">Noviembre</option><option value="12">Diciembre</option>
+                        </select>
+                    </div>
+                    <div style="flex:1;">
+                        <label style="font-size:0.85rem; color:var(--text-secondary);">Anio:</label>
+                        <input type="number" id="ivaAnio" value="2026" min="2020" max="2030" style="width:100%; padding:8px; border:1px solid var(--border); border-radius:6px;">
+                    </div>
+                </div>
+                <button class="btn btn-primary" style="width:100%;" id="btnIvaRun" onclick="ivaRunProcess()">
+                    Ejecutar descarga y calculo
+                </button>
+                <div id="ivaServerWarning" style="display:none; margin-top:8px; font-size:0.8rem; color:var(--danger);">
+                    El servidor no esta activo. Inicie el dashboard con "iniciar-dashboard.bat" para ejecutar procesos.
+                </div>
+            </div>
+        </div>
+
+        <div class="output-panel" id="ivaOutput"></div>
+
+        <div class="modal-buttons">
+            <button class="btn btn-secondary" onclick="closeIvaModal()">Cerrar</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// ============================================================
+// DATOS DE HERRAMIENTAS
+// ============================================================
+const TOOLS = [
+    // ── IVA y Cumplimiento Fiscal ──
+    {
+        id: 'asistente-iva',
+        title: 'Asistente IVA Fiscal',
+        desc: 'Descarga datos SAT, consulta Zoho y calcula IVA automaticamente. Simula escenarios y genera PDF.',
+        category: 'fiscal',
+        icon: '\u{1F4CA}',
+        type: 'iva-combo',
+        path: 'asistente-iva.html',
+        scriptPath: 'asistente_iva/ejecutar_asistente.py',
+        tags: ['iva', 'sat', 'fel', 'decreto 27-92', 'impuestos', 'automatico']
+    },
+    {
+        id: 'extractor-iva',
+        title: 'Extractor IVA SAT-2237',
+        desc: 'Extrae resumen anual de IVA desde formularios SAT-2237 en PDF. Procesamiento por lotes con OCR.',
+        category: 'fiscal',
+        icon: '\u{1F4C4}',
+        type: 'html',
+        path: 'extractor-iva-2237.html',
+        tags: ['iva', 'sat', '2237', 'pdf', 'ocr', 'anual']
+    },
+    {
+        id: 'declaracion-isr',
+        title: 'Declaracion Anual ISR',
+        desc: 'Genera formulario SAT-1411 para declaracion anual del Impuesto Sobre la Renta.',
+        category: 'fiscal',
+        icon: '\u{1F4CB}',
+        type: 'html',
+        path: 'declaracion-anual-isr.html',
+        tags: ['isr', 'sat', '1411', 'impuesto renta', 'anual']
+    },
+
+    // ── Facturacion y FEL ──
+    {
+        id: 'visor-fel',
+        title: 'Visor de Facturas FEL',
+        desc: 'Carga archivos XML/ZIP desde la Agencia Virtual SAT y visualiza facturas electronicas.',
+        category: 'facturacion',
+        icon: '\u{1F50D}',
+        type: 'html',
+        path: 'visor-facturas-fel.html',
+        tags: ['facturas', 'fel', 'xml', 'sat', 'agencia virtual']
+    },
+    {
+        id: 'asistente-facturacion',
+        title: 'Certificacion FEL con INFILE',
+        desc: 'Certifica facturas de Zoho Books con INFILE para generar Facturas Electronicas.',
+        category: 'facturacion',
+        icon: '\u{2705}',
+        type: 'interactive',
+        path: 'asistente_facturacion/EJECUTAR_ASISTENTE.bat',
+        tags: ['facturacion', 'fel', 'infile', 'zoho', 'certificar']
+    },
+    {
+        id: 'anulacion-sat',
+        title: 'Anulacion Masiva SAT',
+        desc: 'Cancela DTEs en la agencia virtual SAT de forma automatica desde un listado en Excel.',
+        category: 'facturacion',
+        icon: '\u{274C}',
+        type: 'interactive',
+        path: 'asistente_anulacion_sat/ejecutar_anulacion.bat',
+        tags: ['anular', 'sat', 'dte', 'facturas', 'cancelar']
+    },
+    {
+        id: 'carga-masiva-sat',
+        title: 'Carga Masiva SAT desde Zoho',
+        desc: 'Genera Excel de carga masiva SAT con borradores de Zoho Books. Renueva token automaticamente.',
+        category: 'facturacion',
+        icon: '\u{1F4E4}',
+        type: 'script',
+        path: 'generar_excel_sat.bat',
+        cmd: 'generar_excel_sat.bat',
+        tags: ['sat', 'zoho', 'excel', 'carga masiva', 'borradores']
+    },
+
+    // ── Zoho Books / Integraciones ──
+    {
+        id: 'convertidor-bac',
+        title: 'Convertidor BAC a Zoho',
+        desc: 'Convierte estados de cuenta de BAC al formato compatible con Zoho Books.',
+        category: 'zoho',
+        icon: '\u{1F3E6}',
+        type: 'html',
+        path: 'convertidor-bac-zoho.html',
+        tags: ['bac', 'banco', 'zoho', 'convertir', 'estado cuenta']
+    },
+    {
+        id: 'zoho-sat',
+        title: 'Carga Facturas Zoho a SAT',
+        desc: 'Transfiere datos de facturas desde Zoho Books al sistema SAT Guatemala.',
+        category: 'zoho',
+        icon: '\u{1F504}',
+        type: 'html',
+        path: 'zoho-sat-guatemala.html',
+        tags: ['zoho', 'sat', 'facturas', 'transferir', 'carga']
+    },
+    {
+        id: 'zoho-tokens',
+        title: 'Generador de Tokens Zoho',
+        desc: 'Genera y administra tokens OAuth2 para la API de Zoho Books.',
+        category: 'zoho',
+        icon: '\u{1F511}',
+        type: 'html',
+        path: 'zoho-token-generator.html',
+        tags: ['zoho', 'token', 'oauth', 'api', 'autenticacion']
+    },
+    {
+        id: 'renovar-token',
+        title: 'Renovar Token Zoho (Auto)',
+        desc: 'Renueva el access token de Zoho Books automaticamente usando el refresh token guardado.',
+        category: 'zoho',
+        icon: '\u{1F504}',
+        type: 'script',
+        path: 'renovar_token.py',
+        cmd: 'python renovar_token.py',
+        tags: ['zoho', 'token', 'renovar', 'automatico', 'python']
+    },
+
+    // ── Contabilidad ──
+    {
+        id: 'contabilidad',
+        title: 'Sistema Contable NIIF PYMES',
+        desc: 'Sistema contable completo: multi-empresa, catalogo de cuentas, partidas, mayor general y balanza de comprobacion.',
+        category: 'contabilidad',
+        icon: '\u{1F4D2}',
+        type: 'html',
+        path: 'contabilidad/index.html',
+        tags: ['contabilidad', 'niif', 'partidas', 'balanza', 'mayor', 'cuentas']
+    },
+
+    // ── Presupuesto y Analisis ──
+    {
+        id: 'presupuesto-2026',
+        title: 'Presupuesto 2026 - Dashboard',
+        desc: 'Dashboard ejecutivo interactivo. Carga el Excel de presupuesto y visualiza KPIs, P&L y costos.',
+        category: 'presupuesto',
+        icon: '\u{1F4C8}',
+        type: 'html',
+        path: 'presupuesto-2026.html',
+        tags: ['presupuesto', '2026', 'kpi', 'dashboard', 'excel']
+    },
+    {
+        id: 'presupuesto-viewer',
+        title: 'Presupuesto Viewer (Socios)',
+        desc: 'Version de presentacion para socios con datos pre-cargados del presupuesto 2026.',
+        category: 'presupuesto',
+        icon: '\u{1F4CA}',
+        type: 'html',
+        path: 'presupuesto-viewer.html',
+        tags: ['presupuesto', 'viewer', 'socios', 'presentacion']
+    },
+    {
+        id: 'actualizar-presupuesto',
+        title: 'Actualizar Datos Presupuesto',
+        desc: 'Extrae datos del Excel y genera el archivo JS para el visor de socios.',
+        category: 'presupuesto',
+        icon: '\u{1F504}',
+        type: 'script',
+        path: 'actualizar-datos.py',
+        cmd: 'python actualizar-datos.py',
+        tags: ['presupuesto', 'actualizar', 'datos', 'python']
+    },
+
+    // ── Evaluacion de Proyectos ──
+    {
+        id: 'eval-smartfit',
+        title: 'Evaluacion Adstter-SmartFit',
+        desc: 'Evaluacion ejecutiva del proyecto SmartFit Digital Signage con mapas interactivos y metricas.',
+        category: 'evaluacion',
+        icon: '\u{1F4CD}',
+        type: 'html',
+        path: 'evaluacion-adstter-smartfit.html',
+        tags: ['smartfit', 'evaluacion', 'proyecto', 'digital signage', 'mapa']
+    },
+    {
+        id: 'analisis-planes',
+        title: 'Analisis de Planes Adstter',
+        desc: 'Analisis de rentabilidad de los 7 planes de venta con metricas financieras y graficas.',
+        category: 'evaluacion',
+        icon: '\u{1F4B0}',
+        type: 'html',
+        path: 'analisis-planes-adstter.html',
+        tags: ['planes', 'adstter', 'rentabilidad', 'analisis']
+    },
+    {
+        id: 'ruta-smartfit',
+        title: 'Ruta SmartFit - Instalaciones',
+        desc: 'Visualizacion de rutas de instalacion con mapas interactivos y analisis de factibilidad.',
+        category: 'evaluacion',
+        icon: '\u{1F5FA}',
+        type: 'html',
+        path: 'ruta-smartfit.html',
+        tags: ['smartfit', 'ruta', 'instalacion', 'mapa', 'logistica']
+    },
+
+    // ── Libro de Compras y Ventas ──
+    {
+        id: 'libro-cv',
+        title: 'Libro de Compras y Ventas',
+        desc: 'Modulo dentro del Sistema Contable. Genera Libro de Compra y Ventas con calculo de tasas IVA.',
+        category: 'libros',
+        icon: '\u{1F4D6}',
+        type: 'html',
+        path: 'contabilidad/index.html',
+        tags: ['libro', 'compras', 'ventas', 'iva', 'pdf', 'excel', 'contabilidad']
+    }
+];
+
+const CATEGORIES = {
+    fiscal:       { name: 'IVA y Cumplimiento Fiscal', icon: '\u{1F3DB}' },
+    facturacion:  { name: 'Facturacion y FEL', icon: '\u{1F9FE}' },
+    zoho:         { name: 'Zoho Books / Integraciones', icon: '\u{1F517}' },
+    contabilidad: { name: 'Contabilidad', icon: '\u{1F4D2}' },
+    presupuesto:  { name: 'Presupuesto y Analisis Financiero', icon: '\u{1F4B9}' },
+    evaluacion:   { name: 'Evaluacion de Proyectos', icon: '\u{1F4CD}' },
+    libros:       { name: 'Libro de Compras y Ventas', icon: '\u{1F4D6}' }
+};
+
+const CAT_ORDER = ['fiscal', 'facturacion', 'zoho', 'contabilidad', 'presupuesto', 'evaluacion', 'libros'];
+
+// ============================================================
+// SERVIDOR
+// ============================================================
+const SERVER_PORT = 8787;
+const SERVER_URL = `http://localhost:${SERVER_PORT}`;
+let serverOnline = false;
+
+async function checkServer() {
+    try {
+        const r = await fetch(`${SERVER_URL}/api/status`, { signal: AbortSignal.timeout(2000) });
+        if (r.ok) {
+            serverOnline = true;
+            document.getElementById('serverDot').classList.add('online');
+            document.getElementById('serverLabel').textContent = 'Servidor: activo';
+        }
+    } catch {
+        serverOnline = false;
+        document.getElementById('serverDot').classList.remove('online');
+        document.getElementById('serverLabel').textContent = 'Servidor: inactivo';
+    }
+}
+
+// ============================================================
+// RENDER
+// ============================================================
+function renderDashboard(filter = '') {
+    const container = document.getElementById('mainContainer');
+    const noResults = document.getElementById('noResults');
+    const normalizedFilter = filter.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+    const filtered = filter
+        ? TOOLS.filter(t => {
+            const haystack = [t.title, t.desc, ...t.tags].join(' ').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+            return normalizedFilter.split(/\s+/).every(word => haystack.includes(word));
+        })
+        : TOOLS;
+
+    if (filtered.length === 0) {
+        container.innerHTML = '';
+        noResults.classList.add('visible');
+        return;
+    }
+    noResults.classList.remove('visible');
+
+    let html = '';
+    for (const catKey of CAT_ORDER) {
+        const catTools = filtered.filter(t => t.category === catKey);
+        if (catTools.length === 0) continue;
+
+        const cat = CATEGORIES[catKey];
+        html += `
+        <div class="category cat-${catKey} fade-in">
+            <div class="category-header">
+                <div class="category-icon">${cat.icon}</div>
+                <h2>${cat.name}</h2>
+                <span class="category-count">${catTools.length}</span>
+            </div>
+            <div class="cards-grid">
+                ${catTools.map(t => renderCard(t)).join('')}
+            </div>
+        </div>`;
+    }
+    container.innerHTML = html;
+}
+
+function renderCard(tool) {
+    const badges = [];
+    if (tool.type === 'html') badges.push('<span class="badge badge-html">HTML</span>');
+    if (tool.type === 'script') {
+        if (tool.path.endsWith('.py')) badges.push('<span class="badge badge-python">Python</span>');
+        if (tool.path.endsWith('.bat')) badges.push('<span class="badge badge-bat">BAT</span>');
+    }
+    if (tool.tags.includes('zoho')) badges.push('<span class="badge badge-zoho">Zoho</span>');
+    if (tool.tags.includes('sat')) badges.push('<span class="badge badge-sat">SAT</span>');
+    if (tool.tags.includes('automatico') || tool.tags.includes('playwright')) badges.push('<span class="badge badge-auto">Auto</span>');
+
+    if (tool.type === 'interactive') {
+        return `
+        <div class="card card-script" onclick="launchInteractive('${tool.id}')" title="${tool.title}">
+            <div class="card-top">
+                <div class="card-emoji">${tool.icon}</div>
+                <div class="card-info">
+                    <div class="card-title">${tool.title}</div>
+                    <div class="card-desc">${tool.desc}</div>
+                </div>
+            </div>
+            <div class="card-action">
+                <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                Click para abrir en terminal
+            </div>
+            <div class="card-footer">${badges.join('')}</div>
+        </div>`;
+    }
+
+    if (tool.type === 'iva-combo') {
+        return `
+        <div class="card card-script" onclick="openIvaModal()" title="${tool.title}">
+            <div class="card-top">
+                <div class="card-emoji">${tool.icon}</div>
+                <div class="card-info">
+                    <div class="card-title">${tool.title}</div>
+                    <div class="card-desc">${tool.desc}</div>
+                </div>
+            </div>
+            <div class="card-action">
+                <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                Click para abrir o ejecutar proceso
+            </div>
+            <div class="card-footer">${badges.join('')}</div>
+        </div>`;
+    }
+
+    if (tool.type === 'html') {
+        return `
+        <a href="${tool.path}" target="_blank" class="card" title="Abrir ${tool.title}">
+            <div class="card-top">
+                <div class="card-emoji">${tool.icon}</div>
+                <div class="card-info">
+                    <div class="card-title">${tool.title}</div>
+                    <div class="card-desc">${tool.desc}</div>
+                </div>
+            </div>
+            <div class="card-footer">${badges.join('')}</div>
+        </a>`;
+    }
+
+    // Scripts
+    const actionLabel = serverOnline ? 'Click para ejecutar' : 'Click para ver comando';
+    return `
+    <div class="card card-script" onclick="openScript('${tool.id}')" title="${tool.title}">
+        <div class="card-top">
+            <div class="card-emoji">${tool.icon}</div>
+            <div class="card-info">
+                <div class="card-title">${tool.title}</div>
+                <div class="card-desc">${tool.desc}</div>
+            </div>
+        </div>
+        <div class="card-action">
+            <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            ${actionLabel}
+        </div>
+        <div class="card-footer">${badges.join('')}</div>
+    </div>`;
+}
+
+// ============================================================
+// MODAL - SCRIPTS
+// ============================================================
+let currentScript = null;
+
+function openScript(id) {
+    currentScript = TOOLS.find(t => t.id === id);
+    if (!currentScript) return;
+
+    document.getElementById('modalTitle').textContent = currentScript.title;
+    document.getElementById('modalDesc').textContent = currentScript.desc;
+    document.getElementById('modalCmd').textContent = currentScript.cmd || `python ${currentScript.path}`;
+    document.getElementById('modalOutput').textContent = '';
+    document.getElementById('modalOutput').classList.remove('visible');
+
+    const btnExec = document.getElementById('btnExecute');
+    if (serverOnline) {
+        btnExec.style.display = '';
+        btnExec.disabled = false;
+        btnExec.textContent = 'Ejecutar';
+    } else {
+        btnExec.style.display = 'none';
+    }
+
+    document.getElementById('modalOverlay').classList.add('active');
+}
+
+function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('active');
+    currentScript = null;
+}
+
+function copyCommand() {
+    const cmd = document.getElementById('modalCmd').textContent;
+    navigator.clipboard.writeText(cmd).then(() => {
+        const btn = document.querySelector('.btn-copy');
+        btn.textContent = 'Copiado!';
+        setTimeout(() => btn.textContent = 'Copiar comando', 1500);
+    });
+}
+
+async function executeScript() {
+    if (!currentScript || !serverOnline) return;
+
+    const btnExec = document.getElementById('btnExecute');
+    const output = document.getElementById('modalOutput');
+    btnExec.disabled = true;
+    btnExec.textContent = 'Ejecutando...';
+    output.textContent = '';
+    output.classList.add('visible');
+
+    try {
+        const r = await fetch(`${SERVER_URL}/api/execute`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                script: currentScript.path,
+                cmd: currentScript.cmd
+            })
+        });
+        const data = await r.json();
+        if (data.success) {
+            output.innerHTML = `<span class="out-success">--- Proceso completado (codigo: ${data.returncode}) ---</span>\n\n${escapeHtml(data.output)}`;
+        } else {
+            output.innerHTML = `<span class="out-error">--- Error ---</span>\n\n${escapeHtml(data.error || data.output)}`;
+        }
+    } catch (err) {
+        output.innerHTML = `<span class="out-error">Error de conexion con el servidor: ${escapeHtml(err.message)}</span>`;
+    }
+
+    btnExec.disabled = false;
+    btnExec.textContent = 'Ejecutar';
+}
+
+function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ============================================================
+// BÚSQUEDA
+// ============================================================
+let searchTimeout;
+document.getElementById('searchInput').addEventListener('input', function() {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => renderDashboard(this.value.trim()), 200);
+});
+
+// Cerrar modal con Escape
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeModal();
+});
+document.getElementById('modalOverlay').addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeModal();
+});
+
+// ============================================================
+// SCRIPTS INTERACTIVOS - Abrir en terminal
+// ============================================================
+
+async function launchInteractive(id) {
+    const tool = TOOLS.find(t => t.id === id);
+    if (!tool) return;
+
+    if (!serverOnline) {
+        openScript(id);
+        return;
+    }
+
+    try {
+        const r = await fetch(`${SERVER_URL}/api/launch`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ script: tool.path })
+        });
+        const data = await r.json();
+        if (data.success) {
+            // Mostrar notificacion breve
+            const toast = document.createElement('div');
+            toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#2e7d32;color:white;padding:12px 24px;border-radius:8px;font-size:0.9rem;z-index:300;box-shadow:0 4px 12px rgba(0,0,0,0.3);';
+            toast.textContent = tool.title + ' - Abierto en terminal';
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        } else {
+            alert('Error: ' + (data.error || 'No se pudo abrir'));
+        }
+    } catch (err) {
+        alert('Error de conexion: ' + err.message);
+    }
+}
+
+// ============================================================
+// MODAL IVA - Asistente IVA Fiscal
+// ============================================================
+
+function openIvaModal() {
+    const overlay = document.getElementById('ivaModalOverlay');
+    const warning = document.getElementById('ivaServerWarning');
+    const btnRun = document.getElementById('btnIvaRun');
+    const output = document.getElementById('ivaOutput');
+    output.textContent = '';
+    output.classList.remove('visible');
+
+    if (serverOnline) {
+        warning.style.display = 'none';
+        btnRun.disabled = false;
+    } else {
+        warning.style.display = 'block';
+        btnRun.disabled = true;
+    }
+
+    overlay.classList.add('active');
+}
+
+function closeIvaModal() {
+    document.getElementById('ivaModalOverlay').classList.remove('active');
+    // Restaurar boton superior a su estado original
+    const btnOpen = document.getElementById('btnIvaOpen');
+    btnOpen.href = 'asistente-iva.html';
+    btnOpen.innerHTML = '<strong>Abrir asistente</strong><br><span style="font-size:0.8rem; opacity:0.85;">Ver datos existentes, cargar archivos Excel manualmente</span>';
+    btnOpen.style.background = '';
+}
+
+// Mostrar/ocultar campos de mes/anio segun periodo
+document.getElementById('ivaPeriodo').addEventListener('change', function() {
+    const mesAnio = document.getElementById('ivaMesAnio');
+    mesAnio.style.display = this.value === 'mes_completo' ? 'flex' : 'none';
+});
+
+async function ivaRunProcess() {
+    if (!serverOnline) return;
+
+    const periodo = document.getElementById('ivaPeriodo').value;
+    const btnRun = document.getElementById('btnIvaRun');
+    const output = document.getElementById('ivaOutput');
+    const btnOpen = document.getElementById('btnIvaOpen');
+
+    btnRun.disabled = true;
+    btnRun.textContent = 'Ejecutando... (puede tomar 1-2 min)';
+    output.textContent = 'Iniciando proceso: descarga SAT + consulta Zoho + calculo IVA...\n';
+    output.classList.add('visible');
+
+    // Construir comando
+    let cmd = `python ejecutar_asistente.py --periodo ${periodo} --no-abrir`;
+    if (periodo === 'mes_completo') {
+        const mes = document.getElementById('ivaMes').value;
+        const anio = document.getElementById('ivaAnio').value;
+        cmd += ` --anio ${anio} --mes ${mes}`;
+    }
+
+    try {
+        const r = await fetch(`${SERVER_URL}/api/execute`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                script: 'asistente_iva/ejecutar_asistente.py',
+                cmd: cmd
+            })
+        });
+        const data = await r.json();
+
+        if (data.success) {
+            output.innerHTML = `<span class="out-success">Proceso completado exitosamente.</span>\n\n${escapeHtml(data.output)}`;
+            // Actualizar boton superior para indicar datos frescos y redirigir
+            btnOpen.href = 'asistente-iva.html?t=' + Date.now();
+            btnOpen.innerHTML = '<strong>VER RESULTADOS ACTUALIZADOS</strong><br><span style="font-size:0.8rem; opacity:0.85;">Datos descargados exitosamente - click para ver</span>';
+            btnOpen.style.background = '#2e7d32';
+            btnOpen.style.animation = 'fadeIn 0.3s ease-out';
+            // Redirigir automaticamente a la pagina de resultados
+            window.location.href = 'asistente-iva.html?t=' + Date.now();
+        } else {
+            output.innerHTML = `<span class="out-error">Error en el proceso:</span>\n\n${escapeHtml(data.error || data.output)}`;
+        }
+    } catch (err) {
+        output.innerHTML = `<span class="out-error">Error de conexion: ${escapeHtml(err.message)}</span>`;
+    }
+
+    btnRun.disabled = false;
+    btnRun.textContent = 'Ejecutar descarga y calculo';
+}
+
+document.getElementById('ivaModalOverlay').addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeIvaModal();
+});
+
+// ============================================================
+// INIT
+// ============================================================
+checkServer();
+renderDashboard();
+setInterval(checkServer, 15000);
+</script>
+
+</body>
+</html>
