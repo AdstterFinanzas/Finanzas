@@ -1,0 +1,1683 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Análisis Financiero — Adstter × Claro Guatemala | Digital Signage</title>
+<link rel="icon" href="assets/logo-adstter.png" type="image/png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #0a0f1e;
+    --bg-2: #0d1424;
+    --card: #111827;
+    --card-2: #1a2236;
+    --border: #1f2a44;
+    --text: #e5e7eb;
+    --text-dim: #9ca3af;
+    --text-mute: #6b7280;
+    --blue: #3b82f6;
+    --blue-2: #60a5fa;
+    --green: #10b981;
+    --green-2: #34d399;
+    --amber: #f59e0b;
+    --amber-2: #fbbf24;
+    --red: #ef4444;
+    --red-2: #f87171;
+    --orange: #ff8c1a;
+    --orange-2: #ffa64d;
+    --purple: #8b5cf6;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--blue-2); text-decoration: none; }
+  h1,h2,h3,h4 { margin: 0; font-weight: 700; letter-spacing: -0.01em; }
+  h1 { font-size: 2.25rem; line-height: 1.15; }
+  h2 { font-size: 1.5rem; margin-bottom: 1rem; }
+  h3 { font-size: 1.1rem; margin-bottom: 0.75rem; color: var(--text); }
+  h4 { font-size: 0.95rem; color: var(--text-dim); font-weight: 600; }
+  p { margin: 0 0 0.75rem 0; color: var(--text-dim); }
+  small { color: var(--text-mute); font-size: 0.8rem; }
+  code {
+    background: #0a1020;
+    border: 1px solid var(--border);
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.85em;
+    color: var(--orange-2);
+    font-family: 'Consolas', monospace;
+  }
+
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+
+  /* ===== HEADER / HERO ===== */
+  .topbar {
+    background: linear-gradient(180deg, #0d1424 0%, #0a0f1e 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(8px);
+  }
+  .topbar-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .brand { display: flex; align-items: center; gap: 0.75rem; }
+  .brand img { height: 40px; width: auto; display: block; }
+  .brand-text { display: flex; flex-direction: column; line-height: 1.1; }
+  .brand-text strong { color: var(--orange); font-size: 1rem; letter-spacing: 0.02em; }
+  .brand-text span { color: var(--text-mute); font-size: 0.72rem; }
+  .actions { display: flex; gap: 0.5rem; }
+  .btn {
+    background: var(--blue);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.1rem;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .btn:hover { background: #2563eb; transform: translateY(-1px); }
+  .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--text-dim); }
+  .btn-ghost:hover { background: var(--card); color: var(--text); }
+
+  /* ===== HERO ===== */
+  .hero {
+    padding: 3rem 0 2rem 0;
+    border-bottom: 1px solid var(--border);
+    background:
+      radial-gradient(circle at 15% 20%, rgba(255,140,26,0.10) 0%, transparent 35%),
+      radial-gradient(circle at 85% 80%, rgba(59,130,246,0.10) 0%, transparent 40%);
+  }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(255,140,26,0.12);
+    border: 1px solid rgba(255,140,26,0.35);
+    color: var(--orange-2);
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  .hero h1 { color: white; max-width: 900px; }
+  .hero h1 .accent { color: var(--orange); }
+  .hero-sub {
+    margin-top: 0.75rem;
+    color: var(--text-dim);
+    font-size: 1.05rem;
+    max-width: 800px;
+  }
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    margin-top: 1.25rem;
+    color: var(--text-mute);
+    font-size: 0.85rem;
+  }
+  .hero-meta span { display: inline-flex; align-items: center; gap: 0.35rem; }
+  .hero-meta .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+
+  /* ===== KPI GRID ===== */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  .kpi {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    transition: transform 0.15s, border-color 0.15s;
+  }
+  .kpi:hover { transform: translateY(-2px); border-color: var(--orange); }
+  .kpi-label {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-mute);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+  .kpi-value {
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: white;
+    line-height: 1.1;
+  }
+  .kpi-value.green { color: var(--green-2); }
+  .kpi-value.blue { color: var(--blue-2); }
+  .kpi-value.orange { color: var(--orange-2); }
+  .kpi-sub {
+    margin-top: 0.4rem;
+    font-size: 0.85rem;
+    color: var(--text-dim);
+  }
+  .kpi-sub strong { color: var(--text); font-weight: 600; }
+
+  /* ===== SECTIONS ===== */
+  section { padding: 3rem 0; border-bottom: 1px solid var(--border); }
+  section:last-of-type { border-bottom: none; }
+  .section-header { margin-bottom: 1.75rem; }
+  .section-num {
+    display: inline-block;
+    background: var(--orange);
+    color: var(--bg);
+    font-weight: 700;
+    font-size: 0.8rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: 6px;
+    margin-right: 0.6rem;
+    vertical-align: middle;
+  }
+  .section-header h2 { display: inline-block; vertical-align: middle; }
+  .section-header p { margin-top: 0.5rem; }
+
+  /* ===== CARD GRID ===== */
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+  .card-title { font-size: 0.85rem; color: var(--text-mute); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; margin-bottom: 0.75rem; }
+  .card-body { color: var(--text); }
+  .card-body ul { padding-left: 1.2rem; margin: 0.5rem 0; color: var(--text-dim); }
+  .card-body li { margin-bottom: 0.35rem; }
+  .card-big { font-size: 2rem; font-weight: 700; color: white; line-height: 1.1; margin-bottom: 0.25rem; }
+  .card-mid { font-size: 1rem; color: var(--text-dim); margin-bottom: 0.5rem; }
+  .card.success { border-color: rgba(16,185,129,0.4); }
+  .card.warn { border-color: rgba(245,158,11,0.4); }
+  .card.danger { border-color: rgba(239,68,68,0.4); }
+  .card.info { border-color: rgba(59,130,246,0.4); }
+  .card.brand { border-color: rgba(255,140,26,0.4); }
+
+  /* ===== TABLES ===== */
+  .table-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  thead { background: var(--card-2); position: sticky; top: 0; }
+  th {
+    text-align: left;
+    padding: 0.75rem 0.9rem;
+    color: var(--text-dim);
+    font-weight: 600;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  td {
+    padding: 0.7rem 0.9rem;
+    border-bottom: 1px solid rgba(31,42,68,0.5);
+    color: var(--text);
+  }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody tr.total { background: rgba(255,140,26,0.08); font-weight: 700; }
+  tbody tr.total td { color: white; border-top: 2px solid var(--orange); }
+  tbody tr.muted td { color: var(--text-mute); font-style: italic; }
+  tbody tr.paid td { color: var(--green-2); font-weight: 600; }
+  tbody tr.dead td { background: rgba(245,158,11,0.06); color: var(--amber-2); }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  td.center, th.center { text-align: center; }
+  .scroll-table { max-height: 600px; overflow-y: auto; }
+
+  /* ===== BADGES ===== */
+  .badge {
+    display: inline-block;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .badge.green { background: rgba(16,185,129,0.15); color: var(--green-2); }
+  .badge.amber { background: rgba(245,158,11,0.15); color: var(--amber-2); }
+  .badge.red   { background: rgba(239,68,68,0.18); color: var(--red-2); }
+  .badge.blue  { background: rgba(59,130,246,0.15); color: var(--blue-2); }
+  .badge.orange{ background: rgba(255,140,26,0.15); color: var(--orange-2); }
+
+  /* ===== CHARTS ===== */
+  .chart-wrap { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; }
+  .chart-canvas { max-height: 380px; }
+
+  /* ===== PMT / FORMULA ===== */
+  .formula {
+    background: #060912;
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--orange);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 0.9rem;
+    color: var(--text);
+    line-height: 1.7;
+    overflow-x: auto;
+    white-space: pre;
+  }
+  .formula .hl { color: var(--orange-2); }
+  .formula .res { color: var(--green-2); font-weight: 600; }
+
+  /* ===== TIMELINE / RUTA ===== */
+  .timeline { position: relative; padding-left: 2rem; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0.55rem;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    width: 2px;
+    background: linear-gradient(180deg, var(--orange) 0%, var(--blue) 100%);
+  }
+  .tl-item { position: relative; padding-bottom: 1.25rem; }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -1.65rem;
+    top: 0.4rem;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--card);
+    border: 2px solid var(--orange);
+  }
+  .tl-item.metro::before { border-color: var(--blue); }
+  .tl-item.interior::before { border-color: var(--amber); }
+  .tl-item.peten::before { border-color: var(--red); }
+  .tl-item.transit::before { border-color: var(--text-mute); background: var(--text-mute); }
+  .tl-day { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: baseline; }
+  .tl-day strong { color: white; font-size: 0.95rem; }
+  .tl-day .meta { color: var(--text-mute); font-size: 0.82rem; }
+  .tl-detail { margin-top: 0.3rem; color: var(--text-dim); font-size: 0.88rem; }
+
+  /* ===== RIESGOS ===== */
+  .risk {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 1.25rem;
+    border-left: 4px solid var(--text-mute);
+    margin-bottom: 1rem;
+  }
+  .risk.crit { border-left-color: var(--red); background: linear-gradient(90deg, rgba(239,68,68,0.06) 0%, var(--card) 30%); }
+  .risk.med  { border-left-color: var(--amber); background: linear-gradient(90deg, rgba(245,158,11,0.06) 0%, var(--card) 30%); }
+  .risk.low  { border-left-color: var(--green); background: linear-gradient(90deg, rgba(16,185,129,0.06) 0%, var(--card) 30%); }
+  .risk-head { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; margin-bottom: 0.6rem; flex-wrap: wrap; }
+  .risk-head h3 { margin: 0; color: white; }
+  .risk dl { display: grid; grid-template-columns: max-content 1fr; gap: 0.35rem 1rem; margin: 0; font-size: 0.9rem; }
+  .risk dt { color: var(--text-mute); font-weight: 600; }
+  .risk dd { margin: 0; color: var(--text); }
+
+  /* ===== RECOMENDACIONES ===== */
+  .rec {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    display: grid;
+    grid-template-columns: 50px 1fr;
+    gap: 1rem;
+    align-items: start;
+  }
+  .rec-num {
+    background: var(--orange);
+    color: var(--bg);
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1.1rem;
+  }
+  .rec h3 { color: white; margin-bottom: 0.4rem; }
+  .rec p, .rec ul { color: var(--text-dim); margin: 0.3rem 0; }
+  .rec ul { padding-left: 1.2rem; }
+
+  /* ===== SOPORTE PRESENCIAL ===== */
+  .support-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  .support-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    border-top: 3px solid var(--text-mute);
+  }
+  .support-card.green  { border-top-color: var(--green); }
+  .support-card.amber  { border-top-color: var(--amber); }
+  .support-card.red    { border-top-color: var(--red); }
+  .support-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem; }
+  .support-head h3 { color: white; margin: 0; }
+  .support-meta { font-size: 0.82rem; color: var(--text-mute); margin-bottom: 0.75rem; }
+  .support-price { display: flex; gap: 0.4rem; align-items: baseline; }
+  .support-price .q { font-size: 1.5rem; font-weight: 700; color: white; }
+  .support-price .usd { color: var(--text-dim); font-size: 0.95rem; }
+  .support-tabs { display: flex; gap: 0.4rem; margin-bottom: 0.75rem; }
+  .support-tabs button {
+    background: transparent; border: 1px solid var(--border); color: var(--text-dim);
+    padding: 0.35rem 0.75rem; border-radius: 6px; font-family: inherit; font-size: 0.8rem;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .support-tabs button.active { background: var(--orange); border-color: var(--orange); color: var(--bg); font-weight: 600; }
+
+  /* ===== UTIL ===== */
+  .row-info { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .row-info > div { flex: 1; min-width: 150px; }
+  .row-info dt { color: var(--text-mute); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.25rem; }
+  .row-info dd { color: white; font-weight: 600; margin: 0; }
+  .pill {
+    display: inline-block;
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    background: var(--card-2);
+    color: var(--text-dim);
+    font-size: 0.78rem;
+    font-weight: 500;
+    margin-right: 0.4rem;
+    margin-bottom: 0.3rem;
+  }
+  .quote {
+    border-left: 3px solid var(--blue);
+    padding: 0.5rem 1rem;
+    margin: 0.75rem 0;
+    color: var(--text-dim);
+    background: rgba(59,130,246,0.05);
+    border-radius: 0 8px 8px 0;
+  }
+  .stat-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 1rem; }
+  .stat-strip .stat { background: var(--card-2); padding: 0.85rem 1rem; border-radius: 8px; }
+  .stat strong { display: block; color: white; font-size: 1.15rem; margin-bottom: 0.15rem; }
+  .stat span { color: var(--text-mute); font-size: 0.78rem; }
+
+  /* ===== FOOTER ===== */
+  footer {
+    padding: 2rem 0 3rem;
+    text-align: center;
+    color: var(--text-mute);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--border);
+  }
+  footer img { height: 28px; opacity: 0.85; margin-bottom: 0.5rem; }
+  footer .footer-line { margin: 0.25rem 0; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 980px) {
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .grid-3 { grid-template-columns: 1fr; }
+    .grid-2 { grid-template-columns: 1fr; }
+    .stat-strip { grid-template-columns: repeat(2, 1fr); }
+    .support-grid { grid-template-columns: 1fr; }
+    h1 { font-size: 1.6rem; }
+    h2 { font-size: 1.25rem; }
+  }
+
+  /* ===== PRINT / PDF ===== */
+  @media print {
+    @page { size: A4; margin: 14mm 12mm; }
+    html, body { background: white !important; color: #111 !important; font-size: 10pt; }
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .topbar, .actions, .btn { display: none !important; }
+    .container { max-width: 100% !important; padding: 0 !important; }
+    section { padding: 0.6rem 0; border-bottom: 1px solid #ccc; page-break-inside: avoid; break-inside: avoid; }
+    .hero { padding: 0.5rem 0 1rem; background: white !important; }
+    .hero h1, .hero h1 .accent, h1, h2, h3, h4 { color: #0a0f1e !important; }
+    .hero-sub, p, .card-mid, .kpi-sub, .card-body, .card-body ul, .card-body li, .tl-detail, .risk dd { color: #333 !important; }
+    .hero-meta, .card-title, .kpi-label, small, .text-mute, dt, .support-meta, .stat span { color: #555 !important; }
+    .kpi, .card, .chart-wrap, .table-wrap, .support-card, .risk, .rec, .formula {
+      background: white !important;
+      border-color: #ccc !important;
+      box-shadow: none !important;
+      page-break-inside: avoid;
+    }
+    .kpi-value, .card-big, .stat strong, td, .support-price .q, .brand-text strong {
+      color: #0a0f1e !important;
+    }
+    thead { background: #f3f4f6 !important; }
+    th { color: #333 !important; border-color: #ccc !important; }
+    td { color: #111 !important; border-color: #eee !important; }
+    tbody tr.total { background: #fff7ed !important; }
+    tbody tr.total td { color: #b45309 !important; border-top-color: #f59e0b !important; }
+    tbody tr.paid td { color: #047857 !important; }
+    tbody tr.dead td { background: #fef3c7 !important; color: #92400e !important; }
+    tbody tr.muted td { color: #6b7280 !important; }
+    .badge.green { background: #d1fae5 !important; color: #047857 !important; }
+    .badge.amber { background: #fef3c7 !important; color: #b45309 !important; }
+    .badge.red   { background: #fee2e2 !important; color: #b91c1c !important; }
+    .badge.blue  { background: #dbeafe !important; color: #1d4ed8 !important; }
+    .badge.orange{ background: #ffedd5 !important; color: #c2410c !important; }
+    .formula { background: #f9fafb !important; color: #111 !important; }
+    .formula .hl { color: #c2410c !important; }
+    .formula .res { color: #047857 !important; font-weight: 700; }
+    .scroll-table { max-height: none !important; overflow: visible !important; }
+    .chart-wrap { page-break-inside: avoid; }
+    .risk { page-break-inside: avoid; }
+    .rec { page-break-inside: avoid; }
+    .section-num { background: #f59e0b !important; color: white !important; }
+    .pill { background: #f3f4f6 !important; color: #444 !important; }
+    .quote { background: #eff6ff !important; color: #1e3a8a !important; border-left-color: #3b82f6 !important; }
+    section { page-break-after: auto; }
+    h2 { page-break-after: avoid; }
+    .print-only { display: block !important; }
+  }
+  .print-only { display: none; }
+</style>
+</head>
+<body>
+
+<!-- ============ TOP BAR ============ -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <img src="assets/logo-adstter.png" alt="Adstter" />
+      <div class="brand-text">
+        <strong>ADSTTER</strong>
+        <span>Análisis financiero interno</span>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-ghost" onclick="window.scrollTo({top:0, behavior:'smooth'})">↑ Inicio</button>
+      <button class="btn" onclick="window.print()">⤓ Descargar PDF</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="container">
+    <span class="hero-tag">Cotización · CEO Review · Febrero 2026</span>
+    <h1>Análisis Financiero — Adstter <span class="accent">×</span> Claro Guatemala</h1>
+    <p class="hero-sub">
+      Digital Signage · 76 pantallas · 15 ubicaciones · Contrato 24 meses · Financiamiento Banco Industrial
+      · <strong style="color:var(--orange-2);">Pago único inicial Q21,746 (cubre viáticos de ruta) + renta
+      mensual amortiza solo mano de obra. Visitas de soporte fuera de GC se facturan por evento.</strong>
+    </p>
+    <div class="hero-meta">
+      <span><span class="dot"></span> Cliente: <strong style="color:var(--text)">Claro Guatemala</strong></span>
+      <span>Proveedor: <strong style="color:var(--text)">Adstter</strong></span>
+      <span>Moneda base: <strong style="color:var(--text)">Quetzales (Q)</strong></span>
+      <span>FX: <strong style="color:var(--text)">Q7.76 = USD $1</strong></span>
+      <span>Tasa BI: <strong style="color:var(--text)">10% anual fija</strong></span>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi">
+        <div class="kpi-label">Renta mensual bruta</div>
+        <div class="kpi-value orange">Q 3,465.25</div>
+        <div class="kpi-sub">USD $446.55 · facturado a Claro</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">ROI 24 meses</div>
+        <div class="kpi-value green">105.50%</div>
+        <div class="kpi-sub">Q2.05 por cada Q1 invertido</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Recuperación</div>
+        <div class="kpi-value blue">12 meses</div>
+        <div class="kpi-sub">Deuda Q0 en Mes 12</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Utilidad neta 24m</div>
+        <div class="kpi-value green">Q 35,345.52</div>
+        <div class="kpi-sub">USD $4,555 · meses 13–24 flujo libre</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ SEC 1: DATOS DEL PROYECTO ============ -->
+<section>
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Datos del proyecto</h2>
+      <p>Parámetros base de la cotización y supuestos del modelo financiero.</p>
+    </div>
+
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-title">Alcance técnico</div>
+        <div class="card-body">
+          <div class="card-big">76 pantallas</div>
+          <div class="card-mid">15 ubicaciones (tiendas)</div>
+          <p><strong>Tipo:</strong> Android / Windows<br><small>Cliente provee los equipos.</small></p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Alcance contractual</div>
+        <div class="card-body">
+          <div class="card-big">24 meses</div>
+          <div class="card-mid">+ período muerto 1 mes</div>
+          <p><strong>Inicio:</strong> Mes 1 de instalación<br><small>Fecha sujeta a confirmación con cliente.</small></p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Estructura financiera</div>
+        <div class="card-body">
+          <div class="card-big">Q33,226.25</div>
+          <div class="card-mid">Capital base proyecto · sin viáticos</div>
+          <p><strong>Banco:</strong> Industrial · 10% fijo<br><small>Comisión vendedor 15% sobre renta.</small></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SEC 2: RESUMEN EJECUTIVO ============ -->
+<section>
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Resumen ejecutivo</h2>
+      <p>Tres dimensiones críticas para decisión del CEO: lo que se invierte, lo que se cobra, lo que retorna.</p>
+    </div>
+
+    <div class="grid-3">
+      <div class="card brand">
+        <div class="card-title">Capital Adstter / Banco</div>
+        <div class="card-big">Q 33,226.25</div>
+        <div class="card-mid">USD $4,282 · solo mano de obra</div>
+        <ul style="padding-left:1.1rem; color:var(--text-dim); font-size:0.9rem;">
+          <li>Mano de obra operativa: Q26,006.25</li>
+          <li>Instalación 2 técnicos: Q7,220.00</li>
+          <li>Financiado por Banco Industrial al 10%</li>
+        </ul>
+        <p style="margin-top:0.5rem;"><small>No incluye equipos (los provee Claro) ni viáticos (cobro separado al cliente).</small></p>
+      </div>
+      <div class="card info">
+        <div class="card-title">Cobros al cliente</div>
+        <div class="card-big">Q 104,912</div>
+        <div class="card-mid">USD $13,520 · total 24 meses</div>
+        <ul style="padding-left:1.1rem; color:var(--text-dim); font-size:0.9rem;">
+          <li><strong style="color:var(--orange-2);">Pago único inicial: Q21,746.15</strong> (viáticos ruta)</li>
+          <li>Renta mensual: Q3,465.25 × 24 = Q83,165.96</li>
+          <li>Cargos extra por visitas fuera GC: variable</li>
+        </ul>
+        <p style="margin-top:0.5rem;"><small>El pago inicial NO se amortiza con la renta; se cobra antes de instalar.</small></p>
+      </div>
+      <div class="card success">
+        <div class="card-title">Retorno / ROI</div>
+        <div class="card-big">105.50%</div>
+        <div class="card-mid">Utilidad neta Q35,345.52 + buffer</div>
+        <ul style="padding-left:1.1rem; color:var(--text-dim); font-size:0.9rem;">
+          <li>Recuperación: 12 meses</li>
+          <li>Flujo libre: Q2,945.46/mes (M13–M24)</li>
+          <li>Buffer ÷0.60 viáticos: hasta Q8,698 extra</li>
+        </ul>
+        <p style="margin-top:0.5rem;"><small>El margen de viáticos se convierte en utilidad si no hay imprevistos en ruta.</small></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SEC 3: ESTRUCTURA DE COSTOS ============ -->
+<section>
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Estructura de costos — Q33,226.25</h2>
+      <p>El capital financiado por Adstter (vía Banco Industrial) cubre solo mano de obra: instalación inicial y operación anual de gestión de contenido. <strong style="color:var(--orange-2);">Los viáticos se cobran al cliente como pago único inicial (setup fee) — no forman parte del capital ni del PMT.</strong></p>
+    </div>
+
+    <div class="grid-2">
+      <div>
+        <h3 style="margin-bottom:0.6rem;">Capital financiado (amortizado en renta)</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Categoría</th><th class="num">Monto (Q)</th><th class="num">% total</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Gestión de contenido (MO operativa)</td><td class="num">26,006.25</td><td class="num">78.3%</td></tr>
+              <tr><td>Instalación (2 técnicos)</td><td class="num">7,220.00</td><td class="num">21.7%</td></tr>
+              <tr class="total"><td>CAPITAL AMORTIZADO</td><td class="num">33,226.25</td><td class="num">100.0%</td></tr>
+              <tr class="muted"><td colspan="3" style="text-align:center;">— Pago único inicial (no amortizado) —</td></tr>
+              <tr><td>Viáticos ruta instalación (cobro separado)</td><td class="num">21,746.15</td><td class="num">setup fee</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="chart-wrap">
+        <h3 style="margin-bottom:0.5rem;">Capital amortizado vs setup fee</h3>
+        <canvas id="chartCostos" class="chart-canvas"></canvas>
+      </div>
+    </div>
+
+    <h3 style="margin-top:2rem;">3.1 Mano de obra — Instalación (Q7,220.00)</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Rubro</th><th>Unidad</th><th class="num">Cantidad</th><th class="num">Tarifa (Q)</th><th class="num">Total (Q)</th></tr></thead>
+        <tbody>
+          <tr><td>Técnico 1 — instalación</td><td>Hora</td><td class="num">76</td><td class="num">47.50</td><td class="num">3,610.00</td></tr>
+          <tr><td>Técnico 2 — instalación</td><td>Hora</td><td class="num">76</td><td class="num">47.50</td><td class="num">3,610.00</td></tr>
+          <tr class="total"><td colspan="4">Subtotal instalación</td><td class="num">7,220.00</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="margin-top:2rem;">3.2 Mano de obra — Operación anual (Q26,006.25)</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Rubro</th><th>Detalle</th><th class="num">Total (Q)</th></tr></thead>
+        <tbody>
+          <tr><td>Gestión de contenido + monitoreo</td><td>1.5h/día × 365 días = 547.5 hrs × Q47.50</td><td class="num">26,006.25</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="quote">
+      Incluye: carga/descarga diaria de contenido vía WhatsApp + Agente IA, monitoreo de pantallas, reportes de capturas de pantalla, supervisión de publicaciones.
+    </div>
+
+    <h3 style="margin-top:2rem;">3.3 Pago único inicial — Viáticos de ruta (Q21,746.15)</h3>
+    <div class="quote" style="border-left-color: var(--orange);">
+      <strong style="color:var(--orange-2);">Política de viáticos:</strong> El cliente paga a Adstter un
+      <strong>pago único inicial de Q21,746.15 (USD $2,802)</strong> antes del arranque de la instalación.
+      Este monto cubre todos los viáticos de la ruta de 13 días y NO se amortiza con la renta mensual
+      (es un cobro adicional separado). Adstter administra estos fondos para ejecutar la ruta. Las visitas
+      de soporte fuera de GC durante el contrato se facturan por evento según la <strong>Sección 08</strong>.
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Rubro</th><th class="num">Cantidad</th><th class="num">Tarifa</th><th class="num">Base (Q)</th></tr></thead>
+        <tbody>
+          <tr><td>Arrendamiento de vehículo</td><td class="num">8 días</td><td class="num">Q415.18/día</td><td class="num">3,321.44</td></tr>
+          <tr><td>Hospedaje en ruta</td><td class="num">10 noches</td><td class="num">Q425.00/noche</td><td class="num">4,250.00</td></tr>
+          <tr><td>Alimentación (3 tiempos)</td><td class="num">16</td><td class="num">Q50.00 c/u</td><td class="num">2,400.00</td></tr>
+          <tr><td>Combustible</td><td class="num">1,850 km</td><td class="num">Q0.70/km</td><td class="num">1,295.00</td></tr>
+          <tr><td>Horas de manejo</td><td class="num">37.5 hrs</td><td class="num">Q47.50/hr</td><td class="num">1,781.25</td></tr>
+          <tr class="muted"><td colspan="3">Subtotal base real</td><td class="num">13,047.69</td></tr>
+          <tr><td colspan="3">Factor de contingencia ÷ 0.60 (+66.7% buffer)</td><td class="num">21,746.15</td></tr>
+          <tr class="paid"><td colspan="3"><strong>Cobro al cliente (pago único inicial)</strong></td><td class="num"><strong>21,746.15</strong></td></tr>
+          <tr class="muted"><td colspan="3">Margen de contingencia (potencial utilidad si no hay imprevistos)</td><td class="num">+8,698.46</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="quote">
+      <strong>Metodología ÷ 0.60:</strong> Los viáticos base (Q13,047.69) se dividen entre 0.60 para incorporar
+      automáticamente un 40% de margen contra imprevistos (cambios de WiFi, visitas adicionales, combustible
+      extra en Petén, pernoctaciones no planificadas). Si la ruta se ejecuta sin contingencias, ese margen
+      (Q8,698.46) se convierte en utilidad adicional para Adstter.
+    </div>
+  </div>
+</section>
+
+<!-- ============ SEC 4: CALCULO PMT ============ -->
+<section>
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Cálculo de renta mensual — Metodología PMT</h2>
+      <p>La renta facturada a Claro se obtiene tomando la cuota fija (PMT) que amortiza el crédito Banco Industrial en 12 meses, dividida entre el factor neto tras comisión del vendedor (85%).</p>
+    </div>
+
+    <h3>Parámetros financieros</h3>
+    <div class="table-wrap" style="margin-bottom:1.5rem;">
+      <table>
+        <thead><tr><th>Parámetro</th><th class="num">Valor</th><th>Nota</th></tr></thead>
+        <tbody>
+          <tr><td>Capital base del proyecto</td><td class="num">Q 33,226.25</td><td>Solo MO instalación + operativa (sin viáticos)</td></tr>
+          <tr><td>Banco financiador</td><td class="num">Banco Industrial</td><td>—</td></tr>
+          <tr><td>Tasa de interés anual</td><td class="num">10.00%</td><td>Tasa fija</td></tr>
+          <tr><td>Tasa de interés mensual</td><td class="num">0.8333%</td><td>= 10% / 12</td></tr>
+          <tr><td>Período muerto</td><td class="num">1 mes</td><td>Mes de instalación en campo (15 días hábiles)</td></tr>
+          <tr><td>Intereses capitalizados (mes muerto)</td><td class="num">Q 276.89</td><td>Se suman al capital, no se pagan</td></tr>
+          <tr><td>Capital ajustado PMT</td><td class="num">Q 33,503.14</td><td>= Q33,226.25 + Q276.89</td></tr>
+          <tr><td>Períodos de recuperación</td><td class="num">12 cuotas</td><td>Meses 1–12 del contrato</td></tr>
+          <tr><td>Comisión al vendedor</td><td class="num">15%</td><td>Sobre renta mensual bruta</td></tr>
+          <tr><td>Factor neto tras comisión</td><td class="num">0.85</td><td>= 1 − 0.15</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Fórmula y resultado</h3>
+    <div class="formula">
+PMT (cuota banco) = <span class="hl">Q33,503.14</span> × [0.8333% × (1+0.8333%)^12] / [(1+0.8333%)^12 − 1]
+                  = <span class="res">Q 2,945.46 / mes</span>
+
+Renta bruta = PMT / (1 − comisión vendedor)
+            = Q2,945.46 / 0.85
+            = <span class="res">Q 3,465.25 / mes</span>
+    </div>
+
+    <h3 style="margin-top:1.5rem;">Desglose de la renta mensual</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Componente</th><th class="num">Monto / mes</th><th class="num">%</th></tr></thead>
+        <tbody>
+          <tr class="total"><td>Renta bruta total (facturado a Claro)</td><td class="num">Q 3,465.25</td><td class="num">100%</td></tr>
+          <tr><td>(−) Comisión vendedor 15%</td><td class="num">Q 519.79</td><td class="num">15%</td></tr>
+          <tr class="paid"><td>(=) Abono neto al Banco Industrial</td><td class="num">Q 2,945.46</td><td class="num">85%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SEC 5: FLUJO DE CAJA ============ -->
+<section>
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Flujo de caja proyectado — 24 meses</h2>
+      <p>Saldo de la deuda con Banco Industrial vs utilidad acumulada disponible para Adstter. Tres fases claramente diferenciadas: período muerto, recuperación, utilidad pura.</p>
+    </div>
+
+    <div class="stat-strip">
+      <div class="stat"><strong>Mes 0</strong><span>Período muerto · capital Q33,503.14</span></div>
+      <div class="stat"><strong>Mes 1–12</strong><span>Recuperación · cuota Q2,945.46</span></div>
+      <div class="stat"><strong>Mes 12</strong><span>Deuda totalmente pagada · Q0</span></div>
+      <div class="stat"><strong>Mes 13–24</strong><span>Utilidad pura · +Q35,345.52</span></div>
+    </div>
+
+    <div class="chart-wrap" style="margin-top:1.25rem;">
+      <canvas id="chartFlujo" class="chart-canvas" style="max-height:420px;"></canvas>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SEC 6: TABLA AMORTIZACION ============ -->
+<section>
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Tabla de amortización — 24 meses</h2>
+      <p>Mes 0 = período muerto (intereses capitalizados, no se cobra renta). Meses 1–12 amortizan capital. Meses 13–24 = utilidad pura para Adstter (deuda en Q0).</p>
+    </div>
+
+    <div class="table-wrap scroll-table">
+      <table id="tablaAmort">
+        <thead>
+          <tr>
+            <th>Mes</th>
+            <th class="num">Renta bruta (Q)</th>
+            <th class="num">Comisión vend. (Q)</th>
+            <th class="num">Abono banco (Q)</th>
+            <th class="num">Intereses (Q)</th>
+            <th class="num">Amort. capital (Q)</th>
+            <th class="num">Saldo final (Q)</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- generado por JS -->
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="margin-top:1.75rem;">Fases del contrato</h3>
+    <div class="grid-3">
+      <div class="card warn">
+        <div class="card-title">Fase 1 — Período muerto</div>
+        <div class="card-big">Mes 0</div>
+        <div class="card-mid">1 mes · instalación en campo</div>
+        <p>Intereses Q276.89 capitalizados al capital. No hay cobro de renta.</p>
+      </div>
+      <div class="card info">
+        <div class="card-title">Fase 2 — Recuperación</div>
+        <div class="card-big">Mes 1 → 12</div>
+        <div class="card-mid">12 cuotas · Q2,945.46/mes al banco</div>
+        <p>Renta bruta Q3,465.25 → comisión 15% + abono PMT.</p>
+      </div>
+      <div class="card success">
+        <div class="card-title">Fase 3 — Utilidad pura</div>
+        <div class="card-big">Mes 13 → 24</div>
+        <div class="card-mid">12 meses · flujo libre</div>
+        <p>Deuda en Q0. Adstter recibe Q2,945.46/mes neto.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SEC 7: RUTA DE INSTALACION ============ -->
+<section>
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Ruta de instalación — 13 días hábiles</h2>
+      <p>Plan operativo del período muerto. 2 técnicos en campo, ~2,100 km recorridos, 6 pernoctaciones fuera de Guatemala City. <strong style="color:var(--orange-2);">Los viáticos de esta ruta están cubiertos por el pago único inicial de Q21,746.15 que el cliente paga a Adstter antes del arranque.</strong></p>
+    </div>
+
+    <div class="stat-strip">
+      <div class="stat"><strong>~2,100 km</strong><span>Total recorrido</span></div>
+      <div class="stat"><strong>6 noches</strong><span>Fuera de GC</span></div>
+      <div class="stat"><strong>2 técnicos</strong><span>Trabajan en paralelo</span></div>
+      <div class="stat"><strong>13 días</strong><span>+1 día buffer</span></div>
+    </div>
+
+    <h3 style="margin-top:1.75rem;">Resumen de la ruta</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>#</th><th>Región</th><th>Ubicaciones</th><th class="num">Pantallas</th><th>Días</th><th>Tipo</th></tr></thead>
+        <tbody>
+          <tr><td>1–5</td><td><span class="badge blue">Metro</span></td><td>10 ubicaciones (Área Metropolitana)</td><td class="num">~50</td><td>Sem. 1 Lun–Vie</td><td>Retorno diario a GC</td></tr>
+          <tr><td>6</td><td><span class="badge amber">Costa Sur</span></td><td>Claro Escuintla</td><td class="num">5</td><td>Sem. 2 Lun</td><td>Pernoctar en Reu</td></tr>
+          <tr><td>7</td><td><span class="badge amber">Occidente</span></td><td>Retalhuleu + Pradera Xela</td><td class="num">8</td><td>Sem. 2 Mar</td><td>Pernoctar en Xela</td></tr>
+          <tr><td>8</td><td><span class="badge amber">Occidente</span></td><td>Mega 6 Xela + San Pedro Sacatepéquez</td><td class="num">10</td><td>Sem. 2 Mié</td><td>Pernoctar San Marcos</td></tr>
+          <tr><td>9</td><td><span class="badge orange">Tránsito</span></td><td>San Marcos → Guatemala City</td><td class="num">0</td><td>Sem. 2 Jue</td><td>Transición</td></tr>
+          <tr><td>10</td><td><span class="badge red">Petén</span></td><td>GC → Santa Elena (~510 km, ~9h)</td><td class="num">0</td><td>Sem. 2 Vie</td><td>Pernoctar Petén</td></tr>
+          <tr><td>11–12</td><td><span class="badge red">Petén</span></td><td>Descanso en ruta (Sáb–Dom)</td><td class="num">0</td><td>Fin de semana</td><td>En ruta</td></tr>
+          <tr><td>13</td><td><span class="badge red">Petén</span></td><td>Claro Maya Mall Petén</td><td class="num">6</td><td>Sem. 3 Lun</td><td>Salida 11am → GC 19:00</td></tr>
+          <tr class="muted"><td>+1</td><td><span class="badge orange">Buffer</span></td><td>Contingencias / reactivaciones</td><td class="num">—</td><td>Sem. 3 Mar</td><td>Opcional</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grid-2" style="margin-top:1.75rem;">
+      <div>
+        <h3>Detalle diario — Área Metropolitana (Semana 1)</h3>
+        <div class="timeline">
+          <div class="tl-item metro">
+            <div class="tl-day"><strong>Lun S1</strong> <span class="meta">8:00–13:00 / 13:45–17:00 · 10 pantallas</span></div>
+            <div class="tl-detail">Claro Amatitlán + Metrocentro Villa Nueva</div>
+          </div>
+          <div class="tl-item metro">
+            <div class="tl-day"><strong>Mar S1</strong> <span class="meta">8:00–13:00 / 13:15–17:00 · 10 pantallas</span></div>
+            <div class="tl-detail">Santa Clara VN + El Frutal VN</div>
+          </div>
+          <div class="tl-item metro">
+            <div class="tl-day"><strong>Mié S1</strong> <span class="meta">8:00–13:00 / 13:15–17:00 · 10 pantallas</span></div>
+            <div class="tl-detail">Pacific Center + Tikal Futura</div>
+          </div>
+          <div class="tl-item metro">
+            <div class="tl-day"><strong>Jue S1</strong> <span class="meta">8:00–13:00 / 13:30–17:00 · 10 pantallas</span></div>
+            <div class="tl-detail">Maya Mall GC + Monteverde</div>
+          </div>
+          <div class="tl-item metro">
+            <div class="tl-day"><strong>Vie S1</strong> <span class="meta">8:00–13:00 / 13:20–17:00 · 10 pantallas</span></div>
+            <div class="tl-detail">Metronorte + Centra Norte</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3>Detalle diario — Interior del país (Semana 2–3)</h3>
+        <div class="timeline">
+          <div class="tl-item interior">
+            <div class="tl-day"><strong>Lun S2</strong> <span class="meta">10 pantallas · pernocta Retalhuleu / Xela</span></div>
+            <div class="tl-detail">GC→Escuintla (8am–10:30am) → Reu (12:30–15:00) → Hotel Xela</div>
+          </div>
+          <div class="tl-item interior">
+            <div class="tl-day"><strong>Mar S2</strong> <span class="meta">10 pantallas · pernocta San Marcos</span></div>
+            <div class="tl-detail">Pradera Xela (8–10:30) → Mega 6 Xela (10:45–13:15) → San Pedro (14:00–16:30)</div>
+          </div>
+          <div class="tl-item transit">
+            <div class="tl-day"><strong>Mié S2</strong> <span class="meta">0 pantallas · pernocta GC</span></div>
+            <div class="tl-detail">San Marcos → GC (6am, llega 9:30am). Sin instalaciones.</div>
+          </div>
+          <div class="tl-item peten">
+            <div class="tl-day"><strong>Jue S2</strong> <span class="meta">0 pantallas · pernocta Petén</span></div>
+            <div class="tl-detail">GC → Santa Elena Petén (salida 5:30am, llegada ~14:00)</div>
+          </div>
+          <div class="tl-item peten">
+            <div class="tl-day"><strong>Vie S2</strong> <span class="meta">0 pantallas · pernocta Petén</span></div>
+            <div class="tl-detail">Descanso / preparación logística en Petén</div>
+          </div>
+          <div class="tl-item peten">
+            <div class="tl-day"><strong>Sáb–Dom</strong> <span class="meta">0 pantallas · en ruta</span></div>
+            <div class="tl-detail">Fin de semana en Petén (acumulación de viáticos)</div>
+          </div>
+          <div class="tl-item peten">
+            <div class="tl-day"><strong>Lun S3</strong> <span class="meta">6 pantallas · regreso GC</span></div>
+            <div class="tl-detail">Claro Maya Mall Petén (8–11am) → Salida 11am → GC 19:00 ✓</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SEC 8: SOPORTE PRESENCIAL ============ -->
+<section>
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Soporte presencial — Tarifas por visita fuera de GC</h2>
+      <p>Aplicable cuando se requiere visita física fuera del área metropolitana. El soporte remoto está incluido en la mensualidad. <strong style="color:var(--orange-2);">Cada visita se factura por evento como cargo adicional a Adstter</strong> — el tiempo de trabajo del técnico en sitio ya está cubierto por la renta. Los precios cubren viáticos (traslado, vehículo, hospedaje, alimentación) con factor margen ÷0.60.</p>
+    </div>
+
+    <div class="quote" style="border-left-color: var(--orange);">
+      <strong style="color:var(--orange-2);">Política de cobro:</strong> Adstter factura al cliente cada visita fuera de GC al precio listado al momento del evento. El monto se paga a Adstter (no a proveedores directos) y forma parte de la facturación del proyecto. Estas tarifas son adicionales a la renta mensual y al pago único inicial.
+    </div>
+
+    <div class="quote">
+      <strong>Tarifas base:</strong> Combustible Q0.85/km · Hora manejo Q47.50 · Vehículo Q415.18/día · Alimentación Q50/tiempo · Hospedaje Q425/noche · Factor margen ÷ 0.60.
+    </div>
+
+    <div class="support-grid">
+      <!-- Escuintla -->
+      <div class="support-card green">
+        <div class="support-head">
+          <h3>Escuintla</h3>
+          <span class="badge green">Día completo</span>
+        </div>
+        <div class="support-meta">Departamento de Escuintla · 63 km ida · sin hospedaje</div>
+        <div class="support-price"><span class="q">Q 1,152</span><span class="usd">USD $148</span></div>
+        <div class="table-wrap" style="margin-top:0.85rem;">
+          <table>
+            <tbody>
+              <tr><td>Combustible (126 km RT × Q0.85)</td><td class="num">Q 107.10</td></tr>
+              <tr><td>Horas de manejo (2.5 hrs × Q47.50)</td><td class="num">Q 118.75</td></tr>
+              <tr><td>Arrendamiento vehículo (1 día)</td><td class="num">Q 415.18</td></tr>
+              <tr><td>Alimentación (1 tiempo)</td><td class="num">Q 50.00</td></tr>
+              <tr class="muted"><td>Subtotal base</td><td class="num">Q 691.03</td></tr>
+              <tr class="total"><td>Precio por visita ÷0.60</td><td class="num">Q 1,152</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="margin-top:0.5rem;"><small>Salida 7:00 AM desde GC · Regreso ~3:00–4:00 PM</small></p>
+      </div>
+
+      <!-- Retalhuleu -->
+      <div class="support-card amber" data-card="reu">
+        <div class="support-head">
+          <h3>Retalhuleu</h3>
+          <span class="badge amber" id="reu-badge">Día completo</span>
+        </div>
+        <div class="support-meta">Departamento de Retalhuleu · 213 km ida</div>
+        <div class="support-tabs">
+          <button class="active" data-target="reu" data-mode="dia">Día completo</button>
+          <button data-target="reu" data-mode="noche">Con hospedaje</button>
+        </div>
+        <div class="support-price">
+          <span class="q" id="reu-price-q">Q 1,981</span>
+          <span class="usd" id="reu-price-usd">USD $255</span>
+        </div>
+        <div class="table-wrap" style="margin-top:0.85rem;">
+          <table id="reu-table">
+            <tbody></tbody>
+          </table>
+        </div>
+        <p style="margin-top:0.5rem;"><small id="reu-note">Salida 5:00 AM · Regreso ~8:00 PM · Jornada larga</small></p>
+      </div>
+
+      <!-- Quetzaltenango -->
+      <div class="support-card amber" data-card="xela">
+        <div class="support-head">
+          <h3>Quetzaltenango</h3>
+          <span class="badge orange">Cubre 2 tiendas en un viaje</span>
+        </div>
+        <div class="support-meta">Pradera Xela + Mega 6 Xela (2 km entre sí, sin costo adicional) · 210 km ida</div>
+        <div class="support-tabs">
+          <button class="active" data-target="xela" data-mode="dia">Día completo</button>
+          <button data-target="xela" data-mode="noche">Con hospedaje</button>
+        </div>
+        <div class="support-price">
+          <span class="q" id="xela-price-q">Q 2,012</span>
+          <span class="usd" id="xela-price-usd">USD $259</span>
+        </div>
+        <div class="table-wrap" style="margin-top:0.85rem;">
+          <table id="xela-table">
+            <tbody></tbody>
+          </table>
+        </div>
+        <p style="margin-top:0.5rem;"><small id="xela-note">Día completo · jornada larga GC ↔ Xela</small></p>
+      </div>
+
+      <!-- San Pedro Sacatepéquez (San Marcos) -->
+      <div class="support-card amber">
+        <div class="support-head">
+          <h3>San Pedro Sacatepéquez</h3>
+          <span class="badge amber">Hospedaje obligatorio</span>
+        </div>
+        <div class="support-meta">San Marcos · 260 km ida · combinable con Xela (28 km extra)</div>
+        <div class="support-price"><span class="q">Q 3,025</span><span class="usd">USD $390</span></div>
+        <div class="table-wrap" style="margin-top:0.85rem;">
+          <table>
+            <tbody>
+              <tr><td>Combustible (520 km RT × Q0.85)</td><td class="num">Q 442.00</td></tr>
+              <tr><td>Horas de manejo (7.0 hrs × Q47.50)</td><td class="num">Q 332.50</td></tr>
+              <tr><td>Arrendamiento vehículo (1 día)</td><td class="num">Q 415.18</td></tr>
+              <tr><td>Alimentación (4 tiempos)</td><td class="num">Q 200.00</td></tr>
+              <tr><td>Hospedaje (1 noche × Q425)</td><td class="num">Q 425.00</td></tr>
+              <tr class="muted"><td>Subtotal base</td><td class="num">Q 1,814.68</td></tr>
+              <tr class="total"><td>Precio por visita ÷0.60</td><td class="num">Q 3,025</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="margin-top:0.5rem;"><small>Hospedaje obligatorio por 7 hrs de manejo round-trip</small></p>
+      </div>
+
+      <!-- Petén -->
+      <div class="support-card red" data-card="peten">
+        <div class="support-head">
+          <h3>Santa Elena — Petén</h3>
+          <span class="badge red">Tarifa más alta</span>
+        </div>
+        <div class="support-meta">Departamento de Petén · 510 km ida · ~9h de manejo</div>
+        <div class="support-tabs">
+          <button class="active" data-target="peten" data-mode="2dias">2 días / 1 noche</button>
+          <button data-target="peten" data-mode="3dias">3 días / 2 noches</button>
+        </div>
+        <div class="support-price">
+          <span class="q" id="peten-price-q">Q 5,462</span>
+          <span class="usd" id="peten-price-usd">USD $704</span>
+        </div>
+        <div class="table-wrap" style="margin-top:0.85rem;">
+          <table id="peten-table">
+            <tbody></tbody>
+          </table>
+        </div>
+        <p style="margin-top:0.5rem;"><small id="peten-note">Modalidad mínima — 2 días, 1 noche en Petén</small></p>
+      </div>
+
+      <!-- Resumen -->
+      <div class="support-card" style="border-top-color: var(--blue);">
+        <div class="support-head">
+          <h3>Resumen ejecutivo</h3>
+          <span class="badge blue">Comparativa</span>
+        </div>
+        <div class="support-meta">Tarifas por visita — todos los departamentos</div>
+        <div class="table-wrap" style="margin-top:0.5rem;">
+          <table>
+            <thead><tr><th>Ubicación</th><th>Modalidad</th><th class="num">Q</th><th class="num">USD</th></tr></thead>
+            <tbody>
+              <tr><td>Escuintla</td><td>Día completo</td><td class="num">1,152</td><td class="num">$148</td></tr>
+              <tr><td>Retalhuleu</td><td>Día completo</td><td class="num">1,981</td><td class="num">$255</td></tr>
+              <tr><td>Retalhuleu</td><td>Con hospedaje</td><td class="num">2,773</td><td class="num">$357</td></tr>
+              <tr><td>Quetzaltenango</td><td>Día completo</td><td class="num">2,012</td><td class="num">$259</td></tr>
+              <tr><td>Quetzaltenango</td><td>Con hospedaje</td><td class="num">2,804</td><td class="num">$361</td></tr>
+              <tr><td>San Pedro Sac.</td><td>Con hospedaje</td><td class="num">3,025</td><td class="num">$390</td></tr>
+              <tr><td>Santa Elena Petén</td><td>2d / 1n</td><td class="num">5,462</td><td class="num">$704</td></tr>
+              <tr><td>Santa Elena Petén</td><td>3d / 2n</td><td class="num">7,113</td><td class="num">$917</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ SEC 9: POSICIONAMIENTO PRECIO ============ -->
+<section>
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Posicionamiento de precio en el mercado</h2>
+      <p>Con el modelo de cliente cubre viáticos, el precio Adstter queda en <strong style="color:var(--orange-2);">USD $5.88/pantalla/mes</strong>, dejando un 88.2% de espacio hasta el techo del mercado centroamericano de Digital Signage.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Referencia</th><th class="num">Precio / pantalla / mes</th><th>Relación vs Adstter</th></tr></thead>
+        <tbody>
+          <tr><td>Techo mercado CA (Digital Signage)</td><td class="num">USD $50</td><td><span class="badge red">8.5× más caro</span></td></tr>
+          <tr><td>Precio típico mercado CA</td><td class="num">USD $15–30</td><td><span class="badge amber">2.5× – 5× más caro</span></td></tr>
+          <tr class="total"><td><strong>Adstter (propuesta base)</strong></td><td class="num"><strong>USD $5.88</strong></td><td><span class="badge orange">Referencia actual</span></td></tr>
+          <tr><td>Adstter (propuesta licitación sugerida)</td><td class="num">USD $10–14</td><td><span class="badge green">+70% – 138% sobre base</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grid-3" style="margin-top:1.5rem;">
+      <div class="card brand">
+        <div class="card-title">Espacio de pricing</div>
+        <div class="card-big">+88.2%</div>
+        <div class="card-mid">Hasta tocar techo mercado</div>
+      </div>
+      <div class="card info">
+        <div class="card-title">Precio sugerido CEO</div>
+        <div class="card-big">Q 350–450</div>
+        <div class="card-mid">Por ubicación / mes (USD $45–58)</div>
+      </div>
+      <div class="card success">
+        <div class="card-title">Diferenciador</div>
+        <div class="card-big">Agente IA</div>
+        <div class="card-mid">WhatsApp → automático → pantalla</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SEC 10: RIESGOS ============ -->
+<section>
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Análisis de riesgos</h2>
+      <p>Cinco riesgos identificados, ordenados por severidad. Cada riesgo incluye impacto, probabilidad, mitigante y acción requerida.</p>
+    </div>
+
+    <div class="risk crit">
+      <div class="risk-head">
+        <h3>1 · Cancelación anticipada por parte de Claro</h3>
+        <div><span class="badge red">Crítico</span> <span class="badge amber">Prob. media</span></div>
+      </div>
+      <dl>
+        <dt>Impacto</dt><dd>Deuda bancaria sin cobertura antes del mes 12.</dd>
+        <dt>Probabilidad</dt><dd>Media — proceso de licitación confirmado, no es contrato directo.</dd>
+        <dt>Mitigante</dt><dd>Cláusula de penalización = saldo deudor pendiente + 6 meses de renta en caso de rescisión unilateral.</dd>
+        <dt>Acción</dt><dd><strong>Incluir cláusula en contrato ANTES de firmar.</strong></dd>
+      </dl>
+    </div>
+
+    <div class="risk crit">
+      <div class="risk-head">
+        <h3>2 · Período muerto se extiende más de 1 mes</h3>
+        <div><span class="badge red">Crítico</span> <span class="badge green">Prob. baja-media</span></div>
+      </div>
+      <dl>
+        <dt>Impacto</dt><dd>Cada mes adicional capitaliza ~Q277 en intereses; sube la renta necesaria para amortizar.</dd>
+        <dt>Probabilidad</dt><dd>Baja-media — ruta de 13 días hábiles confirmada.</dd>
+        <dt>Mitigante</dt><dd>Día buffer en calendario + monitoreo remoto para reducir visitas presenciales.</dd>
+        <dt>Nota</dt><dd>El riesgo real está en Petén (WiFi inestable, acceso a tienda).</dd>
+      </dl>
+    </div>
+
+    <div class="risk med">
+      <div class="risk-head">
+        <h3>3 · Licitación competitiva — otras empresas aspirantes</h3>
+        <div><span class="badge amber">Medio</span> <span class="badge red">Prob. alta</span></div>
+      </div>
+      <dl>
+        <dt>Impacto</dt><dd>No se gana el contrato post-piloto.</dd>
+        <dt>Probabilidad</dt><dd>Alta — Claro explicitó que el éxito del piloto NO garantiza contratación.</dd>
+        <dt>Mitigante</dt><dd>Precio USD $5.88/pantalla está 88% bajo techo de mercado ($15–$50). Diferenciador: Agente IA para gestión de contenido.</dd>
+        <dt>Acción</dt><dd>Documentar métricas del piloto (uptime, tiempo de publicación, screenshots) desde el día 1.</dd>
+      </dl>
+    </div>
+
+    <div class="risk med">
+      <div class="risk-head">
+        <h3>4 · Imprevistos en ruta exceden el margen ÷0.60 del setup fee</h3>
+        <div><span class="badge amber">Medio</span> <span class="badge amber">Prob. media</span></div>
+      </div>
+      <dl>
+        <dt>Impacto</dt><dd>Si los viáticos reales superan Q21,746, Adstter absorbe la diferencia (no puede ir al cliente por más fondos sin renegociar).</dd>
+        <dt>Probabilidad</dt><dd>Media — el factor ÷0.60 da Q8,698 de buffer, suficiente para imprevistos típicos pero no para escenarios extremos (lluvias, accidente, retraso en Petén).</dd>
+        <dt>Mitigante</dt><dd>Cláusula de "ajuste de viáticos" en el contrato: si los costos reales exceden 130% del estimado, se renegocia un cargo adicional al cliente.</dd>
+        <dt>Acción</dt><dd>Documentar gastos reales día por día con respaldo (facturas) para justificar cualquier ajuste.</dd>
+      </dl>
+    </div>
+
+    <div class="risk med">
+      <div class="risk-head">
+        <h3>4b · Cliente niega o retrasa pago de visitas extras fuera de GC</h3>
+        <div><span class="badge amber">Medio</span> <span class="badge red">Prob. alta</span></div>
+      </div>
+      <dl>
+        <dt>Impacto</dt><dd>Visitas presenciales se posponen → pantallas con incidente sin atender → afectación de uptime y reputación.</dd>
+        <dt>Probabilidad</dt><dd>Alta — el cliente puede percibir las visitas adicionales (Q1,152–7,113) como costo oculto, especialmente Petén.</dd>
+        <dt>Mitigante</dt><dd>Definir en contrato un SLA de respuesta presencial con la tabla de Sección 08 pre-aprobada como apéndice firmado. Visitas se ejecutan contra orden de servicio + factura inmediata.</dd>
+        <dt>Acción</dt><dd>Anexar tabla de tarifas de Sección 08 al contrato y exigir aprobación de presupuesto anual de soporte.</dd>
+      </dl>
+    </div>
+
+    <div class="risk low">
+      <div class="risk-head">
+        <h3>5 · Variación de tasa de interés Banco Industrial</h3>
+        <div><span class="badge green">Bajo</span> <span class="badge green">Prob. nula</span></div>
+      </div>
+      <dl>
+        <dt>Impacto</dt><dd>Subiría el PMT y la renta mínima necesaria.</dd>
+        <dt>Probabilidad</dt><dd>Nula durante el período de financiamiento.</dd>
+        <dt>Mitigante</dt><dd>Crédito pactado a TASA FIJA 10% anual. Sin riesgo durante los 12 meses de pago.</dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SEC 11: RECOMENDACIONES ============ -->
+<section>
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">11</span>
+      <h2>Recomendaciones</h2>
+      <p>Cinco acciones concretas para maximizar la rentabilidad y blindar el contrato.</p>
+    </div>
+
+    <div class="rec">
+      <div class="rec-num">1</div>
+      <div>
+        <h3>Contrato con cláusula de rescisión</h3>
+        <p>Firmar contrato 24 meses con Claro con cláusula de penalización onerosa. Incluir renovación automática por 24 meses adicionales con ajuste por IPC (inflación).</p>
+      </div>
+    </div>
+
+    <div class="rec">
+      <div class="rec-num">2</div>
+      <div>
+        <h3>Precio en licitación — subir a Q350–450/ubicación</h3>
+        <p>La renta de Q231.02/ubicación (USD $29.77) es muy conservadora. El diferenciador del Agente IA + el modelo de viáticos pagados por cliente justifican presentar Q350–Q450/ubicación en la licitación sin salir del rango competitivo. El precio puede subir hasta USD $130/ubicación antes de tocar el techo de mercado.</p>
+      </div>
+    </div>
+
+    <div class="rec">
+      <div class="rec-num">3</div>
+      <div>
+        <h3>Agente IA como diferenciador central de la propuesta</h3>
+        <p>Cuantificar el valor en la propuesta:</p>
+        <ul>
+          <li>Tiempo de publicación de contenido: <strong>&lt;30 min</strong> vs 24–48 horas manual</li>
+          <li>Tasa de error en publicaciones: <strong>~0%</strong> (validación automática)</li>
+          <li>Disponibilidad: <strong>24/7</strong>, sin dependencia de horario de personal</li>
+          <li>Canal: <strong>WhatsApp → automático → pantalla</strong> (sin fricción para el cliente)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rec">
+      <div class="rec-num">4</div>
+      <div>
+        <h3>Piloto 4–29 mayo — métricas medibles desde día 1</h3>
+        <ul>
+          <li>Uptime de pantallas: meta <strong>&gt;99%</strong></li>
+          <li>Tiempo de publicación de contenido nuevo: meta <strong>&lt;30 min</strong></li>
+          <li>Reportes automáticos de screenshots: <strong>diarios</strong></li>
+          <li>Incidentes resueltos remotamente vs presencial: meta <strong>&gt;80% remoto</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rec">
+      <div class="rec-num">5</div>
+      <div>
+        <h3>Expansión con flujo libre de los meses 13–24</h3>
+        <p>Con Q35,346 de flujo libre en meses 13–24, Adstter puede:</p>
+        <ul>
+          <li>Autofinanciar expansión a 20–25 ubicaciones adicionales sin nueva línea bancaria</li>
+          <li>O bien usar el flujo para reducir el costo de financiamiento del siguiente contrato</li>
+          <li>Mantener capital de trabajo intacto: la línea Banco Industrial queda libre 39.6% antes para otros proyectos</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SEC 12: NUMEROS SIMPLES + DATOS TECNICOS ============ -->
+<section>
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">12</span>
+      <h2>Resumen en números simples</h2>
+      <p>La narrativa de una página para llevar a junta.</p>
+    </div>
+
+    <div class="grid-2">
+      <div class="card brand">
+        <h3 style="color:white;">Lo esencial para el CEO</h3>
+        <ul style="padding-left:1.2rem; color:var(--text-dim);">
+          <li>Adstter financia <strong style="color:white;">Q33,226</strong> (MO instalación + operativa) vía Banco Industrial. Los viáticos NO se financian.</li>
+          <li><strong style="color:var(--orange-2);">Pago único inicial Q21,746.15</strong> cobrado al cliente antes de instalar — cubre viáticos de ruta. Si la ruta sale bien, sobra hasta <strong style="color:var(--green-2);">Q8,698</strong> de margen como utilidad.</li>
+          <li>Por cada <strong style="color:white;">Q1 financiado</strong>, el proyecto retorna <strong style="color:var(--green-2);">Q2.05</strong> al final del contrato.</li>
+          <li>La deuda con el banco queda en <strong style="color:white;">Q0 en el mes 12</strong>.</li>
+          <li>A partir del mes 13, cada mes genera <strong style="color:var(--green-2);">Q2,945 de utilidad pura</strong>.</li>
+          <li>Total cobrado al cliente en 24 meses: <strong style="color:white;">Q104,912</strong> (setup fee + 24 rentas) + visitas extras.</li>
+          <li>Si Claro <strong>no contrata</strong> después del piloto: el riesgo financiero se limita a la MO; el setup fee ya se cobró.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Tarifas base usadas en el cálculo</h3>
+        <div class="table-wrap">
+          <table>
+            <tbody>
+              <tr><td>Hora técnico (instalación)</td><td class="num">Q 47.50</td></tr>
+              <tr><td>Hora gestión contenido (operativa)</td><td class="num">Q 47.50</td></tr>
+              <tr><td>Hora de manejo (referencia viáticos)</td><td class="num">Q 47.50</td></tr>
+              <tr><td>Combustible por km (referencia viáticos)</td><td class="num">Q 0.85</td></tr>
+              <tr><td>Alimentación / tiempo (referencia)</td><td class="num">Q 50.00</td></tr>
+              <tr><td>Arrendamiento carro / día (referencia)</td><td class="num">Q 415.18</td></tr>
+              <tr><td>Hospedaje / noche (referencia)</td><td class="num">Q 425.00</td></tr>
+              <tr><td>Factor contingencia viáticos referenciales</td><td class="num">÷ 0.60</td></tr>
+              <tr><td>Tasa interés anual BI</td><td class="num">10.00%</td></tr>
+              <tr><td>Comisión vendedor</td><td class="num">15.00%</td></tr>
+              <tr><td>Tipo de cambio USD</td><td class="num">Q 7.76</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="margin-top:0.75rem;"><small>Las tarifas de viáticos son referenciales para el cliente. No forman parte del capital financiado por Adstter.</small></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <img src="assets/logo-adstter.png" alt="Adstter" />
+  <div class="footer-line"><strong style="color:var(--orange);">ADSTTER</strong> · Análisis financiero — Febrero 2026</div>
+  <div class="footer-line">Cotización Claro Guatemala · Digital Signage 76 pantallas / 15 ubicaciones / 24 meses</div>
+  <div class="footer-line"><small>Modelo PMT con período muerto + viáticos ajustados por factor de contingencia ÷0.60</small></div>
+</footer>
+
+<script>
+  // =============================================================
+  // 1) Constantes financieras (cliente paga viáticos)
+  // =============================================================
+  const FX = 7.76;
+  const RENTA_BRUTA = 3465.25;
+  const COMISION = 519.79;
+  const ABONO_BANCO = 2945.46;
+
+  // =============================================================
+  // 2) Tabla de amortización (datos fijos calculados)
+  // =============================================================
+  const amort = [
+    { mes: 'Mes 0',  renta: 0,        comision: 0,      abono: 0,        intereses: 276.89, capital: 0,        saldo: 33503.14, estado: 'Período muerto', clase: 'dead' },
+    { mes: 'Mes 1',  renta: 3465.25,  comision: 519.79, abono: 2945.46,  intereses: 279.19, capital: 2666.27,  saldo: 30836.87, estado: 'Activo',         clase: '' },
+    { mes: 'Mes 2',  renta: 3465.25,  comision: 519.79, abono: 2945.46,  intereses: 256.97, capital: 2688.49,  saldo: 28148.38, estado: 'Activo',         clase: '' },
+    { mes: 'Mes 3',  renta: 3465.25,  comision: 519.79, abono: 2945.46,  intereses: 234.57, capital: 2710.89,  saldo: 25437.49, estado: 'Activo',         clase: '' },
+    { mes: 'Mes 4',  renta: 3465.25,  comision: 519.79, abono: 2945.46,  intereses: 211.98, capital: 2733.48,  saldo: 22704.01, estado: 'Activo',         clase: '' },
+    { mes: 'Mes 5',  renta: 3465.25,  comision: 519.79, abono: 2945.46,  intereses: 189.20, capital: 2756.26,  saldo: 19947.75, estado: 'Activo',         clase: '' },
+    { mes: 'Mes 6',  renta: 3465.25,  comision: 519.79, abono: 2945.46,  intereses: 166.23, capital: 2779.23,  saldo: 17168.52, estado: 'Activo',         clase: '' },
+    { mes: 'Mes 7',  renta: 3465.25,  comision: 519.79, abono: 2945.46,  intereses: 143.07, capital: 2802.39,  saldo: 14366.13, estado: 'Activo',         clase: '' },
+    { mes: 'Mes 8',  renta: 3465.25,  comision: 519.79, abono: 2945.46,  intereses: 119.72, capital: 2825.74,  saldo: 11540.39, estado: 'Activo',         clase: '' },
+    { mes: 'Mes 9',  renta: 3465.25,  comision: 519.79, abono: 2945.46,  intereses: 96.17,  capital: 2849.29,  saldo: 8691.10,  estado: 'Activo',         clase: '' },
+    { mes: 'Mes 10', renta: 3465.25,  comision: 519.79, abono: 2945.46,  intereses: 72.43,  capital: 2873.03,  saldo: 5818.07,  estado: 'Activo',         clase: '' },
+    { mes: 'Mes 11', renta: 3465.25,  comision: 519.79, abono: 2945.46,  intereses: 48.48,  capital: 2896.98,  saldo: 2921.09,  estado: 'Activo',         clase: '' },
+    { mes: 'Mes 12', renta: 3465.25,  comision: 519.79, abono: 2945.46,  intereses: 24.34,  capital: 2921.12,  saldo: 0,        estado: 'PAGADO',         clase: 'paid' },
+    { mes: 'Mes 13', renta: 3465.25,  comision: 519.79, abono: 0,        intereses: 0,      capital: 0,        saldo: 0,        estado: 'Utilidad pura',  clase: '' },
+    { mes: 'Mes 14', renta: 3465.25,  comision: 519.79, abono: 0,        intereses: 0,      capital: 0,        saldo: 0,        estado: 'Utilidad pura',  clase: '' },
+    { mes: 'Mes 15', renta: 3465.25,  comision: 519.79, abono: 0,        intereses: 0,      capital: 0,        saldo: 0,        estado: 'Utilidad pura',  clase: '' },
+    { mes: 'Mes 16', renta: 3465.25,  comision: 519.79, abono: 0,        intereses: 0,      capital: 0,        saldo: 0,        estado: 'Utilidad pura',  clase: '' },
+    { mes: 'Mes 17', renta: 3465.25,  comision: 519.79, abono: 0,        intereses: 0,      capital: 0,        saldo: 0,        estado: 'Utilidad pura',  clase: '' },
+    { mes: 'Mes 18', renta: 3465.25,  comision: 519.79, abono: 0,        intereses: 0,      capital: 0,        saldo: 0,        estado: 'Utilidad pura',  clase: '' },
+    { mes: 'Mes 19', renta: 3465.25,  comision: 519.79, abono: 0,        intereses: 0,      capital: 0,        saldo: 0,        estado: 'Utilidad pura',  clase: '' },
+    { mes: 'Mes 20', renta: 3465.25,  comision: 519.79, abono: 0,        intereses: 0,      capital: 0,        saldo: 0,        estado: 'Utilidad pura',  clase: '' },
+    { mes: 'Mes 21', renta: 3465.25,  comision: 519.79, abono: 0,        intereses: 0,      capital: 0,        saldo: 0,        estado: 'Utilidad pura',  clase: '' },
+    { mes: 'Mes 22', renta: 3465.25,  comision: 519.79, abono: 0,        intereses: 0,      capital: 0,        saldo: 0,        estado: 'Utilidad pura',  clase: '' },
+    { mes: 'Mes 23', renta: 3465.25,  comision: 519.79, abono: 0,        intereses: 0,      capital: 0,        saldo: 0,        estado: 'Utilidad pura',  clase: '' },
+    { mes: 'Mes 24', renta: 3465.25,  comision: 519.79, abono: 0,        intereses: 0,      capital: 0,        saldo: 0,        estado: 'Utilidad pura',  clase: '' },
+  ];
+
+  function fmt(n) {
+    if (n === 0 || n === null || n === undefined) return '0.00';
+    return n.toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  // Render tabla amortización
+  (function renderAmort() {
+    const tbody = document.querySelector('#tablaAmort tbody');
+    let html = '';
+    let totRenta = 0, totCom = 0, totAbono = 0, totInt = 0, totCap = 0;
+
+    amort.forEach((row, i) => {
+      totRenta += row.renta;
+      totCom   += row.comision;
+      totAbono += row.abono;
+      totInt   += row.intereses;
+      totCap   += row.capital;
+      html += `<tr class="${row.clase}">
+        <td><strong>${row.mes}</strong></td>
+        <td class="num">${fmt(row.renta)}</td>
+        <td class="num">${fmt(row.comision)}</td>
+        <td class="num">${fmt(row.abono)}</td>
+        <td class="num">${fmt(row.intereses)}</td>
+        <td class="num">${fmt(row.capital)}</td>
+        <td class="num">${fmt(row.saldo)}</td>
+        <td><span class="badge ${row.clase==='paid'?'green':row.clase==='dead'?'amber':row.estado==='Utilidad pura'?'green':'blue'}">${row.estado}</span></td>
+      </tr>`;
+    });
+
+    html += `<tr class="total">
+      <td>TOTALES 24 meses</td>
+      <td class="num">${fmt(totRenta)}</td>
+      <td class="num">${fmt(totCom)}</td>
+      <td class="num">${fmt(totAbono)}</td>
+      <td class="num">${fmt(totInt)}</td>
+      <td class="num">${fmt(totCap)}</td>
+      <td class="num">0.00</td>
+      <td><span class="badge green">DEUDA PAGADA</span></td>
+    </tr>`;
+
+    tbody.innerHTML = html;
+  })();
+
+  // =============================================================
+  // 3) Chart: Estructura de costos (donut)
+  // =============================================================
+  Chart.defaults.color = '#9ca3af';
+  Chart.defaults.font.family = "'Inter', sans-serif";
+  Chart.defaults.borderColor = '#1f2a44';
+
+  new Chart(document.getElementById('chartCostos'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Gestión de contenido (MO operativa) — amortizado', 'Instalación 2 técnicos — amortizado', 'Viáticos ruta — pago único inicial'],
+      datasets: [{
+        data: [26006.25, 7220.00, 21746.15],
+        backgroundColor: ['#3b82f6', '#10b981', '#ff8c1a'],
+        borderColor: '#0a0f1e',
+        borderWidth: 3,
+        hoverOffset: 8
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: '62%',
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: { padding: 14, usePointStyle: true, font: { size: 11 } }
+        },
+        tooltip: {
+          callbacks: {
+            label: (ctx) => `${ctx.label}: Q${fmt(ctx.parsed)} (${(ctx.parsed/54972.40*100).toFixed(1)}%)`
+          }
+        }
+      }
+    }
+  });
+
+  // =============================================================
+  // 4) Chart: Flujo de caja 24 meses (barras + línea)
+  // =============================================================
+  const labelsFlujo = ['M0','M1','M2','M3','M4','M5','M6','M7','M8','M9','M10','M11','M12','M13','M14','M15','M16','M17','M18','M19','M20','M21','M22','M23','M24'];
+  const deuda     = [33503, 30837, 28148, 25437, 22704, 19948, 17169, 14366, 11540, 8691, 5818, 2921, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  const utilidad  = [0,     0,     0,     0,     0,     0,     0,     0,     0,     0,    0,    0,    0, 2945, 5891, 8836, 11782, 14727, 17673, 20618, 23564, 26509, 29455, 32400, 35346];
+
+  new Chart(document.getElementById('chartFlujo'), {
+    data: {
+      labels: labelsFlujo,
+      datasets: [
+        {
+          type: 'bar',
+          label: 'Saldo deuda BI (Q)',
+          data: deuda,
+          backgroundColor: 'rgba(239,68,68,0.75)',
+          borderColor: '#ef4444',
+          borderWidth: 1,
+          borderRadius: 4
+        },
+        {
+          type: 'line',
+          label: 'Utilidad acumulada (Q)',
+          data: utilidad,
+          borderColor: '#10b981',
+          backgroundColor: 'rgba(16,185,129,0.18)',
+          tension: 0.35,
+          borderWidth: 2.5,
+          fill: true,
+          pointRadius: 3,
+          pointBackgroundColor: '#10b981'
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { position: 'top', labels: { padding: 14, usePointStyle: true } },
+        tooltip: {
+          callbacks: {
+            label: (ctx) => `${ctx.dataset.label}: Q${fmt(ctx.parsed.y)}`
+          }
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          grid: { color: 'rgba(31,42,68,0.5)' },
+          ticks: {
+            callback: (v) => 'Q' + (v/1000).toFixed(0) + 'k'
+          }
+        },
+        x: { grid: { display: false } }
+      }
+    }
+  });
+
+  // =============================================================
+  // 5) Tabs de soporte presencial
+  // =============================================================
+  const supportData = {
+    reu: {
+      dia: {
+        rows: [
+          ['Combustible (426 km RT × Q0.85)', 362.10],
+          ['Horas de manejo (5.5 hrs × Q47.50)', 261.25],
+          ['Arrendamiento vehículo (1 día)', 415.18],
+          ['Alimentación (3 tiempos)', 150.00],
+          ['Subtotal base', 1188.53, 'muted'],
+          ['Precio por visita ÷0.60', 1981, 'total']
+        ],
+        priceQ: 'Q 1,981', priceUSD: 'USD $255',
+        note: 'Salida 5:00 AM · Regreso ~8:00 PM · Jornada larga',
+        badge: 'Día completo'
+      },
+      noche: {
+        rows: [
+          ['Combustible (426 km RT × Q0.85)', 362.10],
+          ['Horas de manejo (5.5 hrs × Q47.50)', 261.25],
+          ['Arrendamiento vehículo (1 día)', 415.18],
+          ['Alimentación (4 tiempos)', 200.00],
+          ['Hospedaje (1 noche × Q425)', 425.00],
+          ['Subtotal base', 1663.53, 'muted'],
+          ['Precio por visita ÷0.60', 2773, 'total']
+        ],
+        priceQ: 'Q 2,773', priceUSD: 'USD $357',
+        note: 'Modalidad recomendada · 2 días, 1 noche en ruta',
+        badge: 'Con hospedaje'
+      }
+    },
+    xela: {
+      dia: {
+        rows: [
+          ['Combustible (420 km RT × Q0.85)', 357.00],
+          ['Horas de manejo (6.0 hrs × Q47.50)', 285.00],
+          ['Arrendamiento vehículo (1 día)', 415.18],
+          ['Alimentación (3 tiempos)', 150.00],
+          ['Subtotal base', 1207.18, 'muted'],
+          ['Precio por visita ÷0.60', 2012, 'total']
+        ],
+        priceQ: 'Q 2,012', priceUSD: 'USD $259',
+        note: 'Día completo · jornada larga GC ↔ Xela'
+      },
+      noche: {
+        rows: [
+          ['Combustible (420 km RT × Q0.85)', 357.00],
+          ['Horas de manejo (6.0 hrs × Q47.50)', 285.00],
+          ['Arrendamiento vehículo (1 día)', 415.18],
+          ['Alimentación (4 tiempos)', 200.00],
+          ['Hospedaje (1 noche × Q425)', 425.00],
+          ['Subtotal base', 1682.18, 'muted'],
+          ['Precio por visita ÷0.60', 2804, 'total']
+        ],
+        priceQ: 'Q 2,804', priceUSD: 'USD $361',
+        note: 'Recomendado · cubre Pradera + Mega 6 con descanso intermedio'
+      }
+    },
+    peten: {
+      '2dias': {
+        rows: [
+          ['Combustible (1,020 km RT × Q0.85)', 867.00],
+          ['Horas de manejo (18 hrs × Q47.50)', 855.00],
+          ['Arrendamiento vehículo (2 días)', 830.36],
+          ['Alimentación (6 tiempos)', 300.00],
+          ['Hospedaje (1 noche × Q425)', 425.00],
+          ['Subtotal base', 3277.36, 'muted'],
+          ['Precio por visita ÷0.60', 5462, 'total']
+        ],
+        priceQ: 'Q 5,462', priceUSD: 'USD $704',
+        note: 'Modalidad mínima — 2 días, 1 noche en Petén'
+      },
+      '3dias': {
+        rows: [
+          ['Combustible (1,020 km RT × Q0.85)', 867.00],
+          ['Horas de manejo (18 hrs × Q47.50)', 855.00],
+          ['Arrendamiento vehículo (3 días)', 1245.54],
+          ['Alimentación (9 tiempos)', 450.00],
+          ['Hospedaje (2 noches × Q425)', 850.00],
+          ['Subtotal base', 4267.54, 'muted'],
+          ['Precio por visita ÷0.60', 7113, 'total']
+        ],
+        priceQ: 'Q 7,113', priceUSD: 'USD $917',
+        note: 'Modalidad recomendada — 3 días, 2 noches con margen'
+      }
+    }
+  };
+
+  function renderSupportTable(target, mode) {
+    const data = supportData[target][mode];
+    const tbody = document.querySelector(`#${target}-table tbody`);
+    if (!tbody) return;
+    let html = '';
+    data.rows.forEach(r => {
+      const cls = r[2] || '';
+      html += `<tr class="${cls}"><td>${r[0]}</td><td class="num">Q ${fmt(r[1])}</td></tr>`;
+    });
+    tbody.innerHTML = html;
+    document.getElementById(`${target}-price-q`).textContent = data.priceQ;
+    document.getElementById(`${target}-price-usd`).textContent = data.priceUSD;
+    const note = document.getElementById(`${target}-note`);
+    if (note) note.textContent = data.note;
+    if (target === 'reu' && data.badge) {
+      document.getElementById('reu-badge').textContent = data.badge;
+    }
+  }
+
+  // Inicializar tablas
+  renderSupportTable('reu', 'dia');
+  renderSupportTable('xela', 'dia');
+  renderSupportTable('peten', '2dias');
+
+  // Manejar clicks en tabs
+  document.querySelectorAll('.support-tabs button').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const target = btn.getAttribute('data-target');
+      const mode = btn.getAttribute('data-mode');
+      // Activar el botón
+      btn.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      // Renderizar tabla
+      renderSupportTable(target, mode);
+    });
+  });
+</script>
+
+</body>
+</html>

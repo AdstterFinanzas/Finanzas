@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Propuesta Digital Signage · Adstter × Claro Guatemala</title>
+<meta name="description" content="76 pantallas · 15 ubicaciones · 24 meses · Renta Q234/ubicación · Agente IA para gestión de contenido vía WhatsApp." />
+
+<!-- Open Graph (WhatsApp preview) -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://adstterfinanzas.github.io/Finanzas/propuesta-claro-digital-signage.html" />
+<meta property="og:title" content="Propuesta Digital Signage · Adstter × Claro Guatemala" />
+<meta property="og:description" content="76 pantallas · 15 ubicaciones · 24 meses · Q234/ubicación/mes · Soporte remoto 24/7 con Agente IA" />
+<meta property="og:image" content="https://adstterfinanzas.github.io/Finanzas/assets/logo-adstter.png" />
+<meta property="og:image:width" content="400" />
+<meta property="og:image:height" content="400" />
+<meta property="og:locale" content="es_GT" />
+<meta property="og:site_name" content="Adstter" />
+
+<!-- Twitter Card (algunos clientes WhatsApp también la leen) -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Propuesta Digital Signage · Adstter × Claro Guatemala" />
+<meta name="twitter:description" content="76 pantallas · 15 ubicaciones · Q234/ubicación/mes" />
+<meta name="twitter:image" content="https://adstterfinanzas.github.io/Finanzas/assets/logo-adstter.png" />
+
+<link rel="icon" href="assets/logo-adstter.png" type="image/png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --bg: #0a0f1e;
+    --bg-2: #0d1424;
+    --card: #111827;
+    --card-2: #1a2236;
+    --border: #1f2a44;
+    --text: #e5e7eb;
+    --text-dim: #9ca3af;
+    --text-mute: #6b7280;
+    --orange: #ff8c1a;
+    --orange-2: #ffa64d;
+    --orange-soft: rgba(255,140,26,0.12);
+    --green: #10b981;
+    --green-2: #34d399;
+    --blue: #3b82f6;
+    --blue-2: #60a5fa;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  h1, h2, h3, h4 { margin: 0; font-weight: 700; letter-spacing: -0.015em; line-height: 1.2; }
+  p { margin: 0; color: var(--text-dim); }
+
+  .wrap {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  /* ============ HEADER ============ */
+  .header {
+    padding: 1.5rem 1.25rem 1rem;
+    text-align: center;
+    background:
+      radial-gradient(circle at 50% 0%, rgba(255,140,26,0.18) 0%, transparent 50%),
+      linear-gradient(180deg, #0d1424 0%, var(--bg) 100%);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  .logo-wrap img {
+    height: 72px;
+    width: auto;
+    filter: drop-shadow(0 4px 12px rgba(255,140,26,0.3));
+  }
+  .header-tag {
+    display: inline-block;
+    background: var(--orange-soft);
+    color: var(--orange-2);
+    border: 1px solid rgba(255,140,26,0.35);
+    padding: 0.3rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.85rem;
+  }
+  .header h1 {
+    font-size: 1.6rem;
+    color: white;
+    margin-bottom: 0.5rem;
+  }
+  .header h1 .accent { color: var(--orange); }
+  .header p {
+    font-size: 0.95rem;
+    color: var(--text-dim);
+  }
+  .header-meta {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .pill {
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.35rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 500;
+  }
+  .pill strong { color: var(--orange-2); }
+
+  /* ============ HERO PRICING ============ */
+  .hero-price {
+    margin: 1.25rem;
+    background: linear-gradient(135deg, rgba(255,140,26,0.18) 0%, rgba(59,130,246,0.10) 100%);
+    border: 1px solid rgba(255,140,26,0.35);
+    border-radius: 16px;
+    padding: 1.5rem 1.25rem;
+    text-align: center;
+  }
+  .hero-price .label {
+    font-size: 0.72rem;
+    color: var(--orange-2);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  .hero-price .price {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: white;
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+  .hero-price .price small {
+    font-size: 0.95rem;
+    color: var(--text-dim);
+    font-weight: 500;
+  }
+  .hero-price .sub {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    margin-top: 0.4rem;
+  }
+  .hero-price .ubic {
+    color: var(--orange-2);
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-top: 0.6rem;
+  }
+
+  /* ============ SECTION BASE ============ */
+  section {
+    padding: 1.5rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+  }
+  .section-title .num {
+    background: var(--orange);
+    color: var(--bg);
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+  }
+  .section-title h2 {
+    font-size: 1.15rem;
+    color: white;
+  }
+
+  /* ============ KPI GRID (compacto) ============ */
+  .kpi-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+    margin-bottom: 0.5rem;
+  }
+  .kpi-mini {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.85rem 0.9rem;
+  }
+  .kpi-mini .lbl {
+    font-size: 0.68rem;
+    color: var(--text-mute);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+  .kpi-mini .val {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: white;
+    line-height: 1.15;
+  }
+  .kpi-mini.orange .val { color: var(--orange-2); }
+  .kpi-mini.green .val  { color: var(--green-2); }
+  .kpi-mini.blue .val   { color: var(--blue-2); }
+  .kpi-mini .desc {
+    font-size: 0.74rem;
+    color: var(--text-dim);
+    margin-top: 0.2rem;
+  }
+
+  /* ============ INCLUYE ============ */
+  .feature-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .feature {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.85rem 1rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  .feature .icon {
+    width: 32px;
+    height: 32px;
+    background: var(--orange-soft);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--orange);
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .feature .body strong {
+    display: block;
+    color: white;
+    font-size: 0.92rem;
+    margin-bottom: 0.15rem;
+  }
+  .feature .body span {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+  }
+
+  /* ============ HIGHLIGHT (Agente IA) ============ */
+  .highlight {
+    margin: 0.5rem 0;
+    background: linear-gradient(135deg, rgba(16,185,129,0.15) 0%, rgba(59,130,246,0.10) 100%);
+    border: 1px solid rgba(16,185,129,0.4);
+    border-radius: 12px;
+    padding: 1.25rem 1rem;
+  }
+  .highlight h3 {
+    color: var(--green-2);
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  .highlight .stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+  }
+  .highlight .stat {
+    background: rgba(0,0,0,0.25);
+    border-radius: 8px;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+  .highlight .stat strong {
+    display: block;
+    color: white;
+    font-size: 1rem;
+    margin-bottom: 0.1rem;
+  }
+  .highlight .stat span {
+    color: var(--text-dim);
+    font-size: 0.72rem;
+  }
+
+  /* ============ PRECIO TABLA ============ */
+  .price-table {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem;
+  }
+  .price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid rgba(31,42,68,0.5);
+    gap: 0.5rem;
+  }
+  .price-row:last-child { border-bottom: none; }
+  .price-row .label {
+    font-size: 0.88rem;
+    color: var(--text);
+    flex: 1;
+  }
+  .price-row .label small {
+    display: block;
+    color: var(--text-mute);
+    font-size: 0.74rem;
+    margin-top: 0.1rem;
+  }
+  .price-row .amt {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: white;
+    text-align: right;
+    white-space: nowrap;
+  }
+  .price-row .amt small {
+    display: block;
+    color: var(--text-mute);
+    font-size: 0.72rem;
+    font-weight: 500;
+  }
+  .price-row.total {
+    border-top: 2px solid var(--orange);
+    border-bottom: none;
+    margin-top: 0.4rem;
+    padding-top: 0.85rem;
+  }
+  .price-row.total .label { color: var(--orange-2); font-weight: 700; }
+  .price-row.total .amt   { color: var(--orange-2); font-size: 1.1rem; }
+
+  /* ============ COBERTURA ============ */
+  .coverage {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .store {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.45rem 0.75rem;
+    font-size: 0.8rem;
+    color: var(--text);
+  }
+  .store .pant {
+    color: var(--orange-2);
+    font-weight: 700;
+    margin-left: 0.3rem;
+  }
+
+  /* ============ SOPORTE TABLA ============ */
+  .support-table {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .support-row {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    padding: 0.7rem 0.9rem;
+    border-bottom: 1px solid rgba(31,42,68,0.5);
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .support-row:last-child { border-bottom: none; }
+  .support-row .place {
+    font-size: 0.85rem;
+    color: var(--text);
+    font-weight: 500;
+  }
+  .support-row .place small {
+    display: block;
+    color: var(--text-mute);
+    font-size: 0.72rem;
+  }
+  .support-row .price {
+    text-align: right;
+    color: white;
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+  .support-row .price small {
+    display: block;
+    color: var(--text-mute);
+    font-weight: 400;
+    font-size: 0.72rem;
+  }
+  .support-row.head {
+    background: var(--card-2);
+    color: var(--text-dim);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* ============ CTA WHATSAPP ============ */
+  .cta {
+    margin: 1rem 1.25rem;
+    background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+    border-radius: 14px;
+    padding: 1.25rem;
+    text-align: center;
+    color: white;
+    box-shadow: 0 8px 24px rgba(37,211,102,0.25);
+  }
+  .cta h3 {
+    color: white;
+    font-size: 1.1rem;
+    margin-bottom: 0.4rem;
+  }
+  .cta p {
+    color: rgba(255,255,255,0.9);
+    font-size: 0.85rem;
+    margin-bottom: 0.85rem;
+  }
+  .cta .btn-wa {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: white;
+    color: #128c7e;
+    padding: 0.7rem 1.25rem;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+  .cta .btn-wa svg { width: 18px; height: 18px; fill: #128c7e; }
+
+  /* ============ SHARE BAR ============ */
+  .share-bar {
+    position: sticky;
+    top: 0;
+    background: rgba(10,15,30,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.6rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+  }
+  .share-bar .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .share-bar .brand img { height: 24px; }
+  .share-bar .brand strong { color: var(--orange); font-size: 0.85rem; letter-spacing: 0.04em; }
+  .share-btn {
+    background: #25d366;
+    color: white;
+    border: none;
+    padding: 0.45rem 0.8rem;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+  .share-btn svg { width: 14px; height: 14px; fill: white; }
+
+  /* ============ FOOTER ============ */
+  footer {
+    padding: 1.5rem 1.25rem 2.5rem;
+    text-align: center;
+    color: var(--text-mute);
+    font-size: 0.78rem;
+  }
+  footer img {
+    height: 32px;
+    margin-bottom: 0.5rem;
+    opacity: 0.85;
+  }
+  footer .line { margin: 0.2rem 0; }
+  footer a { color: var(--orange-2); text-decoration: none; }
+
+  /* ============ DESKTOP ============ */
+  @media (min-width: 720px) {
+    .wrap { max-width: 720px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+    body { padding: 1rem 0; background: linear-gradient(180deg, #050810 0%, #0a0f1e 100%); min-height: 100vh; }
+    .header h1 { font-size: 2rem; }
+    .hero-price .price { font-size: 3rem; }
+    .kpi-row { grid-template-columns: repeat(4, 1fr); }
+    .highlight .stats { grid-template-columns: repeat(4, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- ============ SHARE BAR ============ -->
+  <div class="share-bar">
+    <div class="brand">
+      <img src="assets/logo-adstter.png" alt="Adstter" />
+      <strong>ADSTTER</strong>
+    </div>
+    <button class="share-btn" onclick="compartirWhatsApp()">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/></svg>
+      Compartir
+    </button>
+  </div>
+
+  <!-- ============ HEADER ============ -->
+  <div class="header">
+    <div class="logo-wrap">
+      <img src="assets/logo-adstter.png" alt="Adstter" />
+    </div>
+    <span class="header-tag">Propuesta · Febrero 2026</span>
+    <h1>Digital Signage <span class="accent">×</span> Claro Guatemala</h1>
+    <p>Plataforma de gestión de contenido para 76 pantallas en 15 ubicaciones, con Agente IA y soporte 24/7.</p>
+    <div class="header-meta">
+      <span class="pill"><strong>76</strong> pantallas</span>
+      <span class="pill"><strong>15</strong> ubicaciones</span>
+      <span class="pill"><strong>24</strong> meses</span>
+    </div>
+  </div>
+
+  <!-- ============ HERO PRICING ============ -->
+  <div class="hero-price">
+    <div class="label">Renta mensual total</div>
+    <div class="price">Q 3,510<small> sin IVA</small></div>
+    <div class="sub">Q 3,931.20 con IVA · USD $452/mes</div>
+    <div class="ubic">Q 234 / ubicación · USD $30</div>
+  </div>
+
+  <!-- ============ KPI ROW ============ -->
+  <section>
+    <div class="section-title">
+      <div class="num">1</div>
+      <h2>Resumen ejecutivo</h2>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-mini orange">
+        <div class="lbl">Inversión inicial</div>
+        <div class="val">Q 21,746</div>
+        <div class="desc">Pago único · viáticos instalación</div>
+      </div>
+      <div class="kpi-mini blue">
+        <div class="lbl">Renta mensual</div>
+        <div class="val">Q 3,510</div>
+        <div class="desc">Sin IVA · Q3,931 con IVA</div>
+      </div>
+      <div class="kpi-mini green">
+        <div class="lbl">Por pantalla</div>
+        <div class="val">USD $5.95</div>
+        <div class="desc">Q46.18 / mes / pantalla</div>
+      </div>
+      <div class="kpi-mini">
+        <div class="lbl">Plazo</div>
+        <div class="val">24 meses</div>
+        <div class="desc">Contrato forzoso</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ INCLUYE ============ -->
+  <section>
+    <div class="section-title">
+      <div class="num">2</div>
+      <h2>Qué incluye la propuesta</h2>
+    </div>
+    <div class="feature-list">
+      <div class="feature">
+        <div class="icon">📺</div>
+        <div class="body">
+          <strong>Licencia Digital Signage</strong>
+          <span>Gestión de contenido, programación, campañas, grupos de pantallas y monitoreo.</span>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="icon">🔧</div>
+        <div class="body">
+          <strong>Instalación y configuración</strong>
+          <span>Alta de pantallas, configuración de red, parametrización inicial en 76 dispositivos.</span>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="icon">🤖</div>
+        <div class="body">
+          <strong>Gestión de contenido + Agente IA</strong>
+          <span>1.5 hrs/día × 365 días — carga/descarga vía WhatsApp + Agente IA, monitoreo y reportes.</span>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="icon">🛡️</div>
+        <div class="body">
+          <strong>Soporte remoto 24/7</strong>
+          <span>SLA de 15 min · WhatsApp + plataforma · 365 días al año.</span>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="icon">🔄</div>
+        <div class="body">
+          <strong>Reemplazo del player por falla</strong>
+          <span>Si el player tiene falla técnica, reemplazo incluido en el servicio.</span>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="icon">📱</div>
+        <div class="body">
+          <strong>Compatibilidad multi-plataforma</strong>
+          <span>Android · Windows · LG webOS · Samsung SuperSign.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ AGENTE IA HIGHLIGHT ============ -->
+  <section>
+    <div class="section-title">
+      <div class="num">3</div>
+      <h2>Diferenciador — Agente IA</h2>
+    </div>
+    <div class="highlight">
+      <h3>Publicación de contenido por WhatsApp en menos de 30 minutos</h3>
+      <p style="color:rgba(255,255,255,0.85); font-size:0.88rem;">El equipo de Claro envía el contenido por WhatsApp y el Agente IA lo valida, procesa y publica automáticamente en las pantallas seleccionadas. Sin manuales, sin tickets, sin esperas.</p>
+      <div class="stats">
+        <div class="stat">
+          <strong>&lt; 30 min</strong>
+          <span>Tiempo de publicación</span>
+        </div>
+        <div class="stat">
+          <strong>~ 0%</strong>
+          <span>Tasa de error</span>
+        </div>
+        <div class="stat">
+          <strong>24/7</strong>
+          <span>Disponibilidad</span>
+        </div>
+        <div class="stat">
+          <strong>WhatsApp</strong>
+          <span>Canal único</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PRECIOS DETALLE ============ -->
+  <section>
+    <div class="section-title">
+      <div class="num">4</div>
+      <h2>Estructura de cobro</h2>
+    </div>
+    <div class="price-table">
+      <div class="price-row">
+        <div class="label">Setup inicial · pago único
+          <small>Viáticos instalación de 76 pantallas en 15 tiendas</small>
+        </div>
+        <div class="amt">Q 21,746.15<small>USD $2,802</small></div>
+      </div>
+      <div class="price-row">
+        <div class="label">Renta mensual · 15 ubicaciones
+          <small>Licencia + operación + soporte 24/7</small>
+        </div>
+        <div class="amt">Q 3,510.00<small>USD $452/mes</small></div>
+      </div>
+      <div class="price-row">
+        <div class="label">Por ubicación / mes</div>
+        <div class="amt">Q 234.00<small>USD $30</small></div>
+      </div>
+      <div class="price-row">
+        <div class="label">Por pantalla / mes</div>
+        <div class="amt">Q 46.18<small>USD $5.95</small></div>
+      </div>
+      <div class="price-row">
+        <div class="label">IVA mensual (incluido en factura)</div>
+        <div class="amt">Q 421.20<small>12%</small></div>
+      </div>
+      <div class="price-row total">
+        <div class="label">Total mensual con IVA</div>
+        <div class="amt">Q 3,931.20</div>
+      </div>
+    </div>
+    <p style="margin-top:0.85rem; font-size:0.78rem; color:var(--text-mute); text-align:center;">
+      Forma de pago: 50% anticipo + 50% contra entrega del setup. Renovación mensual a partir del Mes 1.
+    </p>
+  </section>
+
+  <!-- ============ COBERTURA ============ -->
+  <section>
+    <div class="section-title">
+      <div class="num">5</div>
+      <h2>Cobertura · 15 tiendas</h2>
+    </div>
+    <p style="font-size:0.85rem; margin-bottom:0.85rem;">Instalación distribuida en Área Metropolitana, Costa Sur, Occidente, San Marcos y Petén.</p>
+    <div class="coverage">
+      <div class="store">Amatitlán<span class="pant">5</span></div>
+      <div class="store">Centranorte<span class="pant">4</span></div>
+      <div class="store">El Frutal<span class="pant">6</span></div>
+      <div class="store">Escuintla<span class="pant">5</span></div>
+      <div class="store">Maya Mall<span class="pant">4</span></div>
+      <div class="store">Mega 6<span class="pant">3</span></div>
+      <div class="store">Metronorte<span class="pant">6</span></div>
+      <div class="store">Monteverde<span class="pant">6</span></div>
+      <div class="store">Pacific Center<span class="pant">3</span></div>
+      <div class="store">Xela Centro<span class="pant">4</span></div>
+      <div class="store">Retalhuleu<span class="pant">3</span></div>
+      <div class="store">San Pedro Sac.<span class="pant">7</span></div>
+      <div class="store">Santa Clara<span class="pant">4</span></div>
+      <div class="store">Tikal Futura<span class="pant">8</span></div>
+      <div class="store">Villa Nueva<span class="pant">8</span></div>
+    </div>
+  </section>
+
+  <!-- ============ SOPORTE PRESENCIAL ============ -->
+  <section>
+    <div class="section-title">
+      <div class="num">6</div>
+      <h2>Soporte presencial fuera de GC</h2>
+    </div>
+    <p style="font-size:0.85rem; margin-bottom:0.85rem;">El soporte remoto 24/7 está incluido en la renta mensual. Cuando se requiere visita física fuera de Guatemala City, se factura por evento al precio listado.</p>
+    <div class="support-table">
+      <div class="support-row head">
+        <div>Ubicación</div>
+        <div style="text-align:right;">Tarifa por visita</div>
+      </div>
+      <div class="support-row">
+        <div class="place">Escuintla<small>Día completo · 63 km</small></div>
+        <div class="price">Q 1,152<small>USD $148</small></div>
+      </div>
+      <div class="support-row">
+        <div class="place">Retalhuleu<small>Día completo · 213 km</small></div>
+        <div class="price">Q 1,981<small>USD $255</small></div>
+      </div>
+      <div class="support-row">
+        <div class="place">Quetzaltenango<small>Cubre 2 tiendas · 210 km</small></div>
+        <div class="price">Q 2,012<small>USD $259</small></div>
+      </div>
+      <div class="support-row">
+        <div class="place">San Pedro Sac.<small>Con hospedaje · 260 km</small></div>
+        <div class="price">Q 3,025<small>USD $390</small></div>
+      </div>
+      <div class="support-row">
+        <div class="place">Santa Elena · Petén<small>2 días / 1 noche · 510 km</small></div>
+        <div class="price">Q 5,462<small>USD $704</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TÉRMINOS RÁPIDOS ============ -->
+  <section>
+    <div class="section-title">
+      <div class="num">7</div>
+      <h2>Términos clave</h2>
+    </div>
+    <div class="feature-list">
+      <div class="feature">
+        <div class="icon">📅</div>
+        <div class="body">
+          <strong>Plazo forzoso 24 meses</strong>
+          <span>Salida anticipada: cobro del saldo de meses restantes según condiciones comerciales.</span>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="icon">💳</div>
+        <div class="body">
+          <strong>Forma de pago</strong>
+          <span>50% anticipo + 50% contra entrega del setup. Renovación mensual desde Mes 1.</span>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="icon">📡</div>
+        <div class="body">
+          <strong>Requisitos del cliente</strong>
+          <span>Internet 1 mega/pantalla · energía eléctrica · acceso TeamViewer · pantallas Android/Windows compatibles.</span>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="icon">🔒</div>
+        <div class="body">
+          <strong>Seguridad y almacenamiento</strong>
+          <span>Servidores Google con HTTPS · 1 GB por dispositivo · monitoreo guardado 3 meses.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA WHATSAPP ============ -->
+  <div class="cta">
+    <h3>¿Hablemos por WhatsApp?</h3>
+    <p>Resolvemos dudas, ajustamos detalles y firmamos cuando esté listo.</p>
+    <a class="btn-wa" href="https://wa.me/50241498615?text=Hola%20Adstter%2C%20quiero%20avanzar%20con%20la%20propuesta%20de%20Digital%20Signage%20para%20Claro%20Guatemala." target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/></svg>
+      Escribir por WhatsApp
+    </a>
+  </div>
+
+  <!-- ============ FOOTER ============ -->
+  <footer>
+    <img src="assets/logo-adstter.png" alt="Adstter" />
+    <div class="line"><strong style="color:var(--orange);">ADSTTER</strong> · Publicidad en Pantallas</div>
+    <div class="line">Vía 6 3-09, Edificio Rue 3 · Apto 303 · Zona 4 · Guatemala</div>
+    <div class="line">+502 4149-8615 · <a href="https://www.adstter.com" target="_blank" rel="noopener">adstter.com</a></div>
+    <div class="line" style="margin-top:0.6rem;"><small>Propuesta válida hasta 31/03/2026 · OV #1138870000055106018</small></div>
+  </footer>
+
+</div>
+
+<script>
+  function compartirWhatsApp() {
+    const url = window.location.href;
+    const texto = `Propuesta Digital Signage — Adstter × Claro Guatemala\n\n` +
+                  `📺 76 pantallas · 15 ubicaciones · 24 meses\n` +
+                  `💰 Q234/ubicación/mes (USD $30)\n` +
+                  `🤖 Agente IA + WhatsApp para gestión de contenido\n` +
+                  `🛡️ Soporte remoto 24/7\n\n` +
+                  `Ver propuesta completa: ${url}`;
+
+    // Usa Web Share API si está disponible (móviles modernos)
+    if (navigator.share) {
+      navigator.share({
+        title: 'Propuesta Digital Signage · Adstter × Claro Guatemala',
+        text: texto,
+        url: url
+      }).catch(() => {
+        // fallback a wa.me si el usuario cancela o falla
+        window.open(`https://wa.me/?text=${encodeURIComponent(texto)}`, '_blank');
+      });
+    } else {
+      // Fallback directo a WhatsApp Web/App
+      window.open(`https://wa.me/?text=${encodeURIComponent(texto)}`, '_blank');
+    }
+  }
+</script>
+
+</body>
+</html>
